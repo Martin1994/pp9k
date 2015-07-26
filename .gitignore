@@ -1,13 +1,8 @@
-pp9kNET/project.lock.json
 *.dll
-pp9kNET/libchloropp9k.iobj
+pp9kNET/project.lock.json
+pp9kNET/Library/*.*
 *.pdb
-pp9kNET/libchloropp9k.ipdb
 .fuse_hidden*
 *.plist
-*.so
-*.exp
-*.lib
-*.ilk
-
 *.o
+*.xproj.user
