@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace pp9kNET
 {
@@ -57,7 +56,7 @@ namespace pp9kNET
 
         public bool StartGame(Player player_1, Player player_2)
         {
-            return start_game(Wrapper, null, null);
+            return start_game(Wrapper, player_1.ToInt(), player_2.ToInt());
         }
 
         public bool Setup(int x, int y, Type type, Color side)
@@ -148,7 +147,7 @@ namespace pp9kNET
         private extern static bool resign(IntPtr pp9k);
         
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
-        private extern static bool start_game(IntPtr pp9k, StringBuilder player_1, StringBuilder player_2);
+        private extern static bool start_game(IntPtr pp9k, int player_1, int player_2);
         
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
         private extern static bool setup(IntPtr pp9k, int x, int y, int type, int side);
@@ -364,33 +363,27 @@ namespace pp9kNET
             }
         }
 
-        public static StringBuilder PlayerHuman = new StringBuilder("human");
-        public static StringBuilder PlayerAI1 = new StringBuilder("computer1");
-        public static StringBuilder PlayerAI2 = new StringBuilder("computer2");
-        public static StringBuilder PlayerAI3 = new StringBuilder("computer3");
-        public static StringBuilder PlayerAI4 = new StringBuilder("computer4");
-
-        public static StringBuilder ToCString(this Player player)
+        public static int ToInt(this Player player)
         {
             switch (player)
             {
                 case Player.AI1:
-                    return PlayerAI1;
+                    return 1;
 
                 case Player.AI2:
-                    return PlayerAI2;
+                    return 2;
 
                 case Player.AI3:
-                    return PlayerAI3;
+                    return 3;
 
                 case Player.AI4:
-                    return PlayerAI4;
-
+                    return 4;
+                    
                 case Player.Human:
-                    return PlayerHuman;
+                    return 0;
 
                 default:
-                    return PlayerHuman;
+                    return 0;
 
             }
         }
