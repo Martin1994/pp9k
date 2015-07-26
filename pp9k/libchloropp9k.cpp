@@ -48,7 +48,7 @@ extern "C"
     int pp9k_type_bishop() { return pp9k::Bishop ;}
     int pp9k_type_rook() { return pp9k::Rook; }
     int pp9k_type_knight() { return pp9k::Knight; }
-    int pp9k_type_pawn() { return pp9k::Pawn;m }
+    int pp9k_type_pawn() { return pp9k::Pawn; }
     
     void* create_pp9k()
     {
