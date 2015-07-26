@@ -27,7 +27,7 @@ ViewWrapper::~ViewWrapper()
 void ViewWrapper::ChangeBoard(int x, int y, ChessType type, Color side)
 {
     if (this->ChangeBoardHandler != NULL)
-        ChangeBoardHandler(x, y, type, side);
+        ChangeBoardHandler(x, y, static_cast<int>(type), static_cast<int>(side));
 }
 
 void ViewWrapper::FlushBoard()
@@ -44,7 +44,7 @@ void ViewWrapper::GetCommand()
 void ViewWrapper::Win(Color side, bool checkmate)
 {
     if (this->WinHandler != NULL)
-        WinHandler(side, checkmate);
+        WinHandler(static_cast<int>(side), checkmate);
 }
 
 void ViewWrapper::Draw()
