@@ -9,3 +9,5 @@ pp9kNET/libchloropp9k.ipdb
 *.exp
 *.lib
 *.ilk
+
+*.o
