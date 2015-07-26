@@ -107,29 +107,29 @@ extern "C"
         return ((pp9k_wrapper*) wrapper)->controller->Exit();
     }
     
-    bool set_change_board_handler(void* wrapper, pp9k::ViewWrapper::ChangeBoardFunc handler)
+    void set_change_board_handler(void* wrapper, pp9k::ViewWrapper::ChangeBoardFunc handler)
     {
-        return ((pp9k_wrapper*) wrapper)->view->ChangeBoardHandler = handler;
+        ((pp9k_wrapper*) wrapper)->view->ChangeBoardHandler = handler;
     }
     
-    bool set_flush_board_handler(void* wrapper, pp9k::ViewWrapper::FlushBoardFunc handler)
+	void set_flush_board_handler(void* wrapper, pp9k::ViewWrapper::FlushBoardFunc handler)
     {
-        return ((pp9k_wrapper*) wrapper)->view->FlushBoardHandler = handler;
+        ((pp9k_wrapper*) wrapper)->view->FlushBoardHandler = handler;
     }
     
-    bool set_win_handler(void* wrapper, pp9k::ViewWrapper::WinFunc handler)
+	void set_win_handler(void* wrapper, pp9k::ViewWrapper::WinFunc handler)
     {
-        return ((pp9k_wrapper*) wrapper)->view->WinHandler = handler;
+        ((pp9k_wrapper*) wrapper)->view->WinHandler = handler;
     }
     
-    bool set_draw_handler(void* wrapper, pp9k::ViewWrapper::DrawFunc handler)
+	void set_draw_handler(void* wrapper, pp9k::ViewWrapper::DrawFunc handler)
     {
-        return ((pp9k_wrapper*) wrapper)->view->DrawHandler = handler;
+        ((pp9k_wrapper*) wrapper)->view->DrawHandler = handler;
     }
     
-    bool set_show_score_handler(void* wrapper, pp9k::ViewWrapper::ShowScoreFunc handler)
+	void set_show_score_handler(void* wrapper, pp9k::ViewWrapper::ShowScoreFunc handler)
     {
-        return ((pp9k_wrapper*) wrapper)->view->ShowScoreHandler = handler;
+        ((pp9k_wrapper*) wrapper)->view->ShowScoreHandler = handler;
     }
     
     
