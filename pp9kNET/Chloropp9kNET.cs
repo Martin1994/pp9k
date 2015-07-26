@@ -7,7 +7,9 @@ namespace pp9kNET
     {
         internal const string pp9kDllPath = "libchloropp9k.dll";
 
-        private IntPtr Wrapper;
+        protected readonly IntPtr Wrapper;
+        
+        protected readonly Object ConcurrentLock = new Object();
         
         public Chloropp9kNET()
         {
@@ -41,47 +43,74 @@ namespace pp9kNET
 
         public bool MakeMove(int from_x, int from_y, int to_x, int to_y)
         {
-            return make_move(Wrapper, from_x, from_y, to_x, to_y);
+            lock (ConcurrentLock)
+            {
+                return make_move(Wrapper, from_x, from_y, to_x, to_y);
+            }
         }
 
         public bool Undo()
         {
-            return undo(Wrapper);
+            lock (ConcurrentLock)
+            {
+                return undo(Wrapper);
+            }
         }
 
         public bool Resign()
         {
-            return resign(Wrapper);
+            lock (ConcurrentLock)
+            {
+                return resign(Wrapper);
+            }
         }
 
         public bool StartGame(Player player_1, Player player_2)
         {
-            return start_game(Wrapper, player_1.ToInt(), player_2.ToInt());
+            lock (ConcurrentLock)
+            {
+                return start_game(Wrapper, player_1.ToInt(), player_2.ToInt());
+            }
         }
 
         public bool Setup(int x, int y, Type type, Color side)
         {
-            return setup(Wrapper, x, y, type.ToInt(), side.ToInt());
+            lock (ConcurrentLock)
+            {
+                return setup(Wrapper, x, y, type.ToInt(), side.ToInt());
+            }
         }
 
         public bool InitializeComplete()
         {
-            return initialize_complete(Wrapper);
+            lock (ConcurrentLock)
+            {
+                return initialize_complete(Wrapper);
+            }
         }
 
         public bool InitializeGame()
         {
-            return initialize_game(Wrapper);
+            lock (ConcurrentLock)
+            {
+                return initialize_game(Wrapper);
+            }
         }
 
         public bool SetTurn(Color side)
         {
-            return set_turn(Wrapper, side.ToInt());
+            lock (ConcurrentLock)
+            {
+                return set_turn(Wrapper, side.ToInt());
+            }
         }
 
         public bool Exit()
         {
-            return exit_game(Wrapper);
+            lock (ConcurrentLock)
+            {
+                return exit_game(Wrapper);
+            }
         }
 
         public delegate void ChangeBoardHandler(int x, int y, Type type, Color side);
