@@ -4,3 +4,6 @@ pp9kNET/libchloropp9k.iobj
 *.pdb
 pp9kNET/libchloropp9k.ipdb
 .fuse_hidden*
+*.exp
+*.lib
+*.ilk
