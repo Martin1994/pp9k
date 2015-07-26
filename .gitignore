@@ -3,3 +3,4 @@ pp9kNET/project.lock.json
 pp9kNET/libchloropp9k.iobj
 *.pdb
 pp9kNET/libchloropp9k.ipdb
+.fuse_hidden*
