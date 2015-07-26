@@ -1,12 +1,26 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Chloropp9k
+namespace pp9kNET
 {
     public class Chloropp9kNET : IDisposable
     {
-        private const string pp9kDllPath = "libchloropp9k.so";
-        
+        /*private static string pp9kDllPath// = "libchloropp9k.so";
+        {
+            get
+            {
+                if (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
+                {
+                    return "libchloropp9k.so";
+                }
+                else
+                {
+                    return "libchloropp9k.dll";
+                }
+            }
+        }*/
+        private const string pp9kDllPath = "libchloropp9k.dll";
+
         private IntPtr Wrapper;
         
         public Chloropp9kNET()
@@ -19,7 +33,7 @@ namespace Chloropp9k
             destroy_pp9k(Wrapper);
         }
         
-        #region Import
+#region Import
         
         [DllImport(pp9kDllPath)]
         private extern static int pp9k_color_white();
@@ -76,7 +90,7 @@ namespace Chloropp9k
         [DllImport(pp9kDllPath)]
         private extern static bool set_change_board_handler(IntPtr pp9k);
         
-        #endregion
+#endregion
         
     }
 }
