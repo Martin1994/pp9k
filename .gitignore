@@ -1,1 +1,5 @@
 pp9kNET/project.lock.json
+*.dll
+pp9kNET/libchloropp9k.iobj
+*.pdb
+pp9kNET/libchloropp9k.ipdb
