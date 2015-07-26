@@ -22,10 +22,10 @@ ViewCLI::ViewCLI()
     
     // Welcome message
     std::cout << "Welcome to ChloroPawnPusher9000 v"
-             << pp9k::Version[0] << '.' << pp9k::Version[1]
-             << " (CLI mode) !" << std::endl
-             << "To enable GUI, add \"--graphics\"." << std::endl
-             << "To get command list, type \"help\"." << std::endl;
+              << pp9k::Version[0] << '.' << pp9k::Version[1]
+              << " (CLI mode) !" << std::endl
+              << "To enable GUI, add \"--graphics\"." << std::endl
+              << "To get command list, type \"help\"." << std::endl;
 }
 
 ViewCLI::~ViewCLI()

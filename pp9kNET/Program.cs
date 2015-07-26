@@ -10,9 +10,14 @@ namespace pp9kNET
         {
             Console.WriteLine("Hello pp9k!");
 
-            /*Chloropp9kNET pp9k = new Chloropp9kNET();
-            pp9k.Dispose();
-            pp9k = null;*/
+            Chloropp9kNET pp9k = new Chloropp9kNET();
+
+            pp9k.BoardChanged += new Chloropp9kNET.ChangeBoardHandler((x, y, type, color) =>
+            {
+                Console.WriteLine("Changed!");
+            });
+
+            pp9k.StartGame(Player.Human, Player.Human);
 
             Console.Read();
         }

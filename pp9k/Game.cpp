@@ -74,7 +74,7 @@ bool Game::Start(Player* player1, Player* player2)
         // error to view
         return false;
     }
-    
+	
     if (this->CurrentBoard == NULL)
     {
         this->CurrentBoard = Board::CreateStandardBoard(player1, player2);
@@ -85,7 +85,7 @@ bool Game::Start(Player* player1, Player* player2)
         delete this->CurrentBoard;
         this->CurrentBoard = new_board;
     }
-    
+	
     // Update view
     for (int i = 0; i < pp9k::BoardSize; i++)
     {
@@ -96,22 +96,22 @@ bool Game::Start(Player* player1, Player* player2)
             {
                 this->View->ChangeBoard(i, j, Blank);
             }
-            else
-            {
-                this->View->ChangeBoard(i, j, piece->GetChessType(), piece->GetPlayer()->GetSide());
+			else
+			{
+				this->View->ChangeBoard(i, j, piece->GetChessType(), piece->GetPlayer()->GetSide());
             }
         }
     }
     this->View->FlushBoard();
-    
+	
     delete this->Boards;
-    this->Boards = new BoardHistory;
-    
+    this->Boards = new BoardHistory();
+	
     delete this->Players[0];
     this->Players[0] = player1;
     delete this->Players[1];
     this->Players[1] = player2;
-    
+	
     this->Status = pp9k::Start;
     
     return true;

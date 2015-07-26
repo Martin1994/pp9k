@@ -107,11 +107,11 @@ bool Controller::StartGame(std::string player1, std::string player2)
 {
     Player* player_ins1;
     Player* player_ins2;
-    
+	
     // TODO
     player_ins1 = new PlayerHuman(this->Game, White);
     player_ins2 = new PlayerHuman(this->Game, Black);
-    
+	
     return this->Game->Start(player_ins1, player_ins2);
 }
 
