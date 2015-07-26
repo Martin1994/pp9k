@@ -1,18 +1,20 @@
 using System;
-using Chloropp9k;
+using pp9kNET;
 
-namespace Chloropp9k
+namespace pp9kNET
 {
     public class Program
     {
         
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            
-            Chloropp9kNET pp9k = new Chloropp9kNET();
+            Console.WriteLine("Hello pp9k!");
+
+            /*Chloropp9kNET pp9k = new Chloropp9kNET();
             pp9k.Dispose();
-            pp9k = null;
+            pp9k = null;*/
+
+            Console.Read();
         }
         
     }

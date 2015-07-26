@@ -10,21 +10,19 @@
   },
 
   "commands": {
-    "console" : "console"
+    "console" : "pp9kNET"
   },
 
   "frameworks": {
-    /*"dnx451": {},*/
+    "dnx451": {},
     "dnxcore50": {
-      "dependencies": {,
-        "Microsoft.CSharp": "4.0.0-beta-23019",
-        "System.Collections": "4.0.0.0",
-        "System.Console": "4.0.0-beta-23019",
-        "System.Linq": "4.0.0-beta-23019",
-        "System.Threading": "4.0.0.0",
-        "System.Threading.Tasks": "4.0.0.0",
-        "System.Runtime": "4.0.20-beta-23019",
-        "System.Runtime.InteropServices": "4.0.20-beta-23019"
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.0-beta-22816",
+        "System.Collections": "4.0.10-beta-22231",
+        "System.Console": "4.0.0-beta-22816",
+        "System.Linq": "4.0.0-beta-22816",
+        "System.Runtime": "4.0.20-beta-22816",
+        "System.Runtime.InteropServices": "4.0.20-beta-22816"
       }
     }
   }
