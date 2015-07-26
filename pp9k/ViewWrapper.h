@@ -18,13 +18,13 @@ namespace pp9k
     {
         
     public:
-        typedef void (*ChangeBoardFunc)(int x, int y, ChessType type, Color side);
+        typedef void (*ChangeBoardFunc)(int x, int y, int type, int side);
         ChangeBoardFunc ChangeBoardHandler;
         
         typedef void (*FlushBoardFunc)();
         FlushBoardFunc FlushBoardHandler;
         
-        typedef void (*WinFunc)(Color side, bool checkmate);
+        typedef void (*WinFunc)(int side, bool checkmate);
         WinFunc WinHandler;
         
         typedef void (*DrawFunc)();
