@@ -51,15 +51,15 @@ extern "C"
         }
     };
     
-    EXPORT int pp9k_color_white() { return pp9k::White; }
-    EXPORT int pp9k_color_black() { return pp9k::Black; }
-    EXPORT int pp9k_type_blank() { return pp9k::Blank; }
-    EXPORT int pp9k_type_king() { return pp9k::King; }
-    EXPORT int pp9k_type_queen() { return pp9k::Queen; }
-    EXPORT int pp9k_type_bishop() { return pp9k::Bishop ;}
-    EXPORT int pp9k_type_rook() { return pp9k::Rook; }
-    EXPORT int pp9k_type_knight() { return pp9k::Knight; }
-    EXPORT int pp9k_type_pawn() { return pp9k::Pawn; }
+    EXPORT int pp9k_color_white() { return static_cast<int>(pp9k::White); }
+    EXPORT int pp9k_color_black() { return static_cast<int>(pp9k::Black); }
+    EXPORT int pp9k_type_blank() { return static_cast<int>(pp9k::Blank); }
+    EXPORT int pp9k_type_king() { return static_cast<int>(pp9k::King); }
+    EXPORT int pp9k_type_queen() { return static_cast<int>(pp9k::Queen); }
+    EXPORT int pp9k_type_bishop() { return static_cast<int>(pp9k::Bishop); }
+    EXPORT int pp9k_type_rook() { return static_cast<int>(pp9k::Rook); }
+    EXPORT int pp9k_type_knight() { return static_cast<int>(pp9k::Knight); }
+    EXPORT int pp9k_type_pawn() { return static_cast<int>(pp9k::Pawn); }
     
 	EXPORT void* create_pp9k()
     {
@@ -86,16 +86,65 @@ extern "C"
         return ((pp9k_wrapper*) wrapper)->controller->Resign();
     }
     
-	EXPORT bool start_game(void* wrapper, char* player1, char* player2)
+	EXPORT bool start_game(void* wrapper, int player1, int player2)
     {
-        std::string p1s(player1);
-        std::string p2s(player2);
+        std::string p1s;
+        std::string p2s;
+        
+        switch (player1)
+        {
+            case 0:
+                p1s = "human";
+                break;
+                
+            case 1:
+                p1s = "computer1";
+                break;
+                
+            case 2:
+                p1s = "computer2";
+                break;
+                
+            case 3:
+                p1s = "computer3";
+                break;
+                
+            case 4:
+                p1s = "computer4";
+                break;
+                
+        }
+        
+        switch (player2)
+        {
+            case 0:
+                p2s = "human";
+                break;
+                
+            case 1:
+                p2s = "computer1";
+                break;
+                
+            case 2:
+                p2s = "computer2";
+                break;
+                
+            case 3:
+                p2s = "computer3";
+                break;
+                
+            case 4:
+                p2s = "computer4";
+                break;
+                
+        }
+        
         return ((pp9k_wrapper*) wrapper)->controller->StartGame(p1s, p2s);
     }
     
-	EXPORT bool setup(void* wrapper, int x, int y, pp9k::ChessType type, pp9k::Color side = pp9k::White)
+	EXPORT bool setup(void* wrapper, int x, int y, int type, int side = static_cast<int>(pp9k::White))
     {
-        return ((pp9k_wrapper*) wrapper)->controller->Setup(x, y, type, side);
+        return ((pp9k_wrapper*) wrapper)->controller->Setup(x, y, static_cast<pp9k::ChessType>(type), static_cast<pp9k::Color>(side));
     }
     
 	EXPORT bool initialize_complete(void* wrapper)
@@ -108,9 +157,9 @@ extern "C"
         return ((pp9k_wrapper*) wrapper)->controller->InitializeGame();
     }
     
-	EXPORT bool set_turn(void* wrapper, pp9k::Color side)
+	EXPORT bool set_turn(void* wrapper, int side)
     {
-        return ((pp9k_wrapper*) wrapper)->controller->SetTurn(side);
+        return ((pp9k_wrapper*) wrapper)->controller->SetTurn(static_cast<pp9k::Color>(side));
     }
     
 	EXPORT bool exit_game(void* wrapper)
