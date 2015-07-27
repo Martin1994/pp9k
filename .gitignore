@@ -8,3 +8,5 @@ pp9kNET/Library/*.*
 *.o
 *.so
 *.xproj.user
+Properties/*
+Properties
