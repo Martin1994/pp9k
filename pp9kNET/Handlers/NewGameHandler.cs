@@ -16,7 +16,7 @@ namespace pp9kNET.Handlers
             
             string gameid = _app.CreateGame(Player.Human, Player.Human);
             
-            await context.Response.WriteAsync(String.Format("{gameid:\"{0}\"}", gameid));
+            await context.Response.WriteAsync("{\"gameid\":\"" + gameid.ToString() + "\"}");
         }
 
         public static IHttpHandler Create(Application app)
