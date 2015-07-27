@@ -120,6 +120,11 @@ bool Controller::SetTurn(Color side)
     return this->Game->SetTurn(side);
 }
 
+bool Controller::RefreshBoard()
+{
+	return this->Game->RefreshBoard();
+}
+
 bool Controller::Exit()
 {
     this->Game->Exit();

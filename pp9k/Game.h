@@ -77,6 +77,8 @@ namespace pp9k
         bool RequestStalemate();
         
         bool Undo();
+
+		bool RefreshBoard();
         
         bool Exit();
         

@@ -158,6 +158,15 @@ namespace pp9kNET
                 ScoreShown(score_1, score_2);
         }
 
+        public delegate void ChangeTurnHandler(Color sude);
+        public event ChangeTurnHandler TurnChanged;
+
+        private void ChangeTurnHandlerWrapper(int color)
+        {
+            if (TurnChanged != null)
+                TurnChanged(color.ToColor());
+        }
+
         #region Imported methods
 
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
@@ -189,7 +198,10 @@ namespace pp9kNET
         
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
         private extern static bool set_turn(IntPtr pp9k, int side);
-        
+
+        [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
+        private extern static bool refresh_board(IntPtr pp9k);
+
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
         private extern static bool exit_game(IntPtr pp9k);
 
@@ -212,6 +224,10 @@ namespace pp9kNET
         delegate void ShowScoreFunc(double score_1, double score_2);
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
         private extern static bool set_show_score_handler(IntPtr pp9k, ShowScoreFunc func);
+
+        delegate void ChangeTurnFunc(int side);
+        [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
+        private extern static bool set_change_turn_handler(IntPtr pp9k, ChangeTurnFunc func);
 
         #endregion
 

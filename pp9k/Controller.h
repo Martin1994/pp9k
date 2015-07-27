@@ -35,6 +35,7 @@ namespace pp9k
         bool InitializeComplete();
         bool InitializeGame();
         bool SetTurn(Color side);
+		bool RefreshBoard();
         bool Exit();
         
     };

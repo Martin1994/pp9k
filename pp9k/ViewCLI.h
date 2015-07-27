@@ -29,6 +29,7 @@ namespace pp9k
         void Win(Color side, bool checkmate);
         void Draw();
         void ShowScore(double score1, double score2);
+		void ChangeTurn(Color side);
         
     };
 }

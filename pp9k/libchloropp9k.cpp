@@ -166,6 +166,11 @@ extern "C"
     {
         return ((pp9k_wrapper*) wrapper)->controller->Exit();
     }
+
+	EXPORT bool refresh_board(void* wrapper)
+	{
+		return ((pp9k_wrapper*)wrapper)->controller->RefreshBoard();
+	}
     
 	EXPORT void set_change_board_handler(void* wrapper, pp9k::ViewWrapper::ChangeBoardFunc handler)
     {
@@ -191,6 +196,11 @@ extern "C"
     {
         ((pp9k_wrapper*) wrapper)->view->ShowScoreHandler = handler;
     }
+
+	EXPORT void set_change_turn_handler(void* wrapper, pp9k::ViewWrapper::ChangeTurnFunc handler)
+	{
+		((pp9k_wrapper*)wrapper)->view->ChangeTurnHandler = handler;
+	}
     
     
 #ifdef __cplusplus

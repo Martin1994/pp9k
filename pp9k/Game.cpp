@@ -338,6 +338,12 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
     return false;
 }
 
+bool Game::RefreshBoard()
+{
+	this->View->FlushBoard();
+	return true;
+}
+
 bool Game::Exit()
 {
     this->View->ShowScore(this->GetScore(White), this->GetScore(Black));

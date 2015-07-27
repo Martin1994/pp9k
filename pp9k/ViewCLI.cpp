@@ -375,3 +375,8 @@ void ViewCLI::ShowScore(double score1, double score2)
     std::cout << "White: " << score1 << std::endl;
     std::cout << "Black: " << score2 << std::endl;
 }
+
+void ViewCLI::ChangeTurn(Color side)
+{
+
+}
