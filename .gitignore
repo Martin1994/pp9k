@@ -5,4 +5,5 @@ pp9kNET/Library/*.*
 .fuse_hidden*
 *.plist
 *.o
+*.so
 *.xproj.user
