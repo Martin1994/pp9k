@@ -1,6 +1,7 @@
 *.dll
 pp9kNET/project.lock.json
 pp9kNET/Library/*.*
+!pp9kNET/Library/*.cs
 *.pdb
 .fuse_hidden*
 *.plist
