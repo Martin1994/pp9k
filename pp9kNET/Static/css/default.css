@@ -1,6 +1,7 @@
 ﻿body
 {
     background: #ccc;
+    color: #333;
     font-family: "Consolas", "Menlo", monospace;
     text-align: center;
 }
@@ -26,7 +27,8 @@
     background: #333;
 }
 
-#welcome-page
+#welcome-page,
+#game-page
 {
     position: absolute;
     top: 60px;
@@ -73,4 +75,92 @@
     border-radius: 0;
     
     margin: 30px;
+    padding: 5px 10px;
+}
+
+#game-page .title
+{
+    font-size: 24px;
+    margin: 40px 0 0;
+    font-weight: bold;
+}
+
+#game-page .board
+{
+    margin: 40px auto 10px;
+    width: 400px;
+    height: 400px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555;
+}
+
+#game-page .grid.white
+{
+    background: #ccc;
+}
+
+#game-page .grid.black
+{
+    background: #333;
+}
+
+#game-page .grid
+{
+    width: 50px;
+    height: 50px;
+    float: left;
+    border-style: none;
+}
+
+#game-page .grid.turn
+{
+    float: none;
+    display: block;
+    margin: 0 auto;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #555;
+}
+
+#game-page .grid.turn.white
+{
+    background: #fff;
+}
+
+#game-page .grid.turn.black
+{
+    background: #000;
+}
+
+@keyframes blink {
+    to { visibility: hidden; }
+}
+@-webkit-keyframes blink {
+    to { visibility: hidden; }
+}
+#game-page .grid.blink img
+{
+    animation: blink 1s steps(2, start) infinite;
+    -webkit-animation: blink 1s steps(2, start) infinite;
+}
+
+#game-page .grid img
+{
+  -webkit-filter: drop-shadow(1px 1px 0 #ccc) 
+                  drop-shadow(-1px -1px 0 #ccc)
+                  drop-shadow(1px -1px 0 #ccc) 
+                  drop-shadow(-1px 1px 0 #ccc);
+
+  filter: drop-shadow(1px 1px 0 #ccc) 
+          drop-shadow(-1px -1px 0 #ccc)
+          drop-shadow(1px -1px 0 #ccc) 
+          drop-shadow(1px -1px 0 #ccc);
+}
+
+#game-page .turn-text
+{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 50px;
 }

@@ -7,20 +7,20 @@ namespace pp9kNET
 {
     public class Application
     {
-        protected readonly Dictionary<string, Chloropp9kNET> _games = new Dictionary<string, Chloropp9kNET>();
+        protected readonly Dictionary<string, PassiveGame> _games = new Dictionary<string, PassiveGame>();
         
         protected readonly Object _concurrent_lock = new Object();
         
         protected readonly Random _rnd = new Random();
         
-        protected int _id_length
+        protected virtual int _id_length
         {
             get { return 6; }
         }
         
         public string CreateGame(Player player1, Player player2)
         {
-            Chloropp9kNET pp9k = new Chloropp9kNET();
+            PassiveGame pp9k = new PassiveGame();
             char[] gameid = new char[_id_length];
             string gameid_str;
             
@@ -55,9 +55,9 @@ namespace pp9kNET
             return gameid_str;
         }
         
-        public Chloropp9kNET GetGame(string gameid)
+        public PassiveGame GetGame(string gameid)
         {
-            Chloropp9kNET pp9k = null;
+            PassiveGame pp9k = null;
             if (!_games.TryGetValue(gameid, out pp9k))
             {
                 return null;

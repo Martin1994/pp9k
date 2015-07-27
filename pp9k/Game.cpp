@@ -58,8 +58,14 @@ bool Game::SetTurn(Color side)
     }
     
     this->CurrentBoard->SetTurn(side);
+	this->View->ChangeTurn(this->GetTurn());
     
     return true;
+}
+
+Color Game::GetTurn()
+{
+	return this->CurrentBoard->GetTurn();
 }
 
 double Game::GetScore(Color side)
@@ -103,6 +109,7 @@ bool Game::Start(Player* player1, Player* player2)
         }
     }
     this->View->FlushBoard();
+	this->View->ChangeTurn(this->GetTurn());
 	
     delete this->Boards;
     this->Boards = new BoardHistory();
@@ -140,6 +147,7 @@ bool Game::Initialize()
         }
     }
     this->View->FlushBoard();
+	this->View->ChangeTurn(this->GetTurn());
     
     return true;
 }
@@ -307,6 +315,7 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
                 move = move->GetSubMove();
             }
             this->View->FlushBoard();
+			this->View->ChangeTurn(this->GetTurn());
             
             // Check if this game has ended
             Color opponent = this->CurrentBoard->GetTurn() == White ? Black : White;
@@ -341,6 +350,7 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
 bool Game::RefreshBoard()
 {
 	this->View->FlushBoard();
+	this->View->ChangeTurn(this->GetTurn());
 	return true;
 }
 

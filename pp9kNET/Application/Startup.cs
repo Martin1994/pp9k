@@ -21,12 +21,24 @@ namespace pp9kNET
             
         }
 
+        protected static readonly Dictionary<string, string> _content_types = new Dictionary<string, string>()
+        {
+            { ".jpg", "image/jpeg" },
+            { ".png", "image/png" },
+            { ".bmp", "image/bmp" },
+            { ".svg", "image/svg+xml" },
+            { ".json", "application/json" },
+            { ".js", "application/javascript" },
+            { ".css", "text/css" }
+        };
+
         protected Dictionary<string, HandlerCreater> _handlers = new Dictionary<string, HandlerCreater>()
         {
             { "^/$" , WelcomeHandler.Create },
             { "^/newgame$" , NewGameHandler.Create },
             { "^/game$" , GameHandler.Create },
-            { "^/static/(.*)$" , StaticHandler.Create("^/static/(.*)$", "./Static/{1}") },
+            { "^/command/(.*)$" , CommandHandler.Create("^/command/(.*)$") },
+            { "^/static/(.*)$" , StaticHandler.Create("^/static/(.*)$", "./Static/{1}", _content_types) },
             { "default" , ErrorHandler.Create(404) },
             { "exception" , ErrorHandler.Create(500) }
         };
