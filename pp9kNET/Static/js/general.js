@@ -22,13 +22,13 @@
             case "update-turn":
                 if (action.param == "White")
                 {
-                    $(".grid.turn").addClass("White");
-                    $(".grid.turn").removeClass("Black");
+                    $(".grid.turn").addClass("white");
+                    $(".grid.turn").removeClass("black");
                 }
                 else
                 {
-                    $(".grid.turn").addClass("Black");
-                    $(".grid.turn").removeClass("White");
+                    $(".grid.turn").addClass("black");
+                    $(".grid.turn").removeClass("white");
                 }
                 break;
         }
