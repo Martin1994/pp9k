@@ -19,7 +19,7 @@ namespace pp9kNET.Handlers
         public async Task Respond(HttpContext context)
         {
             context.Response.StatusCode = _code;
-            await context.Response.WriteAsync("Error " + _code.ToString());
+            await context.Response.WriteAsync(String.Format("Error {0}\n", _code.ToString()));
         }
 
         public static HandlerCreater Create(int code)

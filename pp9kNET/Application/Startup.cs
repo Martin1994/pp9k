@@ -24,8 +24,8 @@ namespace pp9kNET
         protected Dictionary<string, HandlerCreater> _handlers = new Dictionary<string, HandlerCreater>()
         {
             { "^/$" , WelcomeHandler.Create },
-            { "^/newgame$" , WelcomeHandler.Create },
-            { "^/game$" , WelcomeHandler.Create },
+            { "^/newgame$" , NewGameHandler.Create },
+            { "^/game$" , GameHandler.Create },
             { "^/static/(.*)$" , StaticHandler.Create("^/static/(.*)$", "./Static/{1}") },
             { "default" , ErrorHandler.Create(404) },
             { "exception" , ErrorHandler.Create(500) }
@@ -60,7 +60,8 @@ namespace pp9kNET
                 }
                 catch (Exception ex)
                 {
-                    _handlers["exception"](pp9k_app).Respond(context);
+                    await _handlers["exception"](pp9k_app).Respond(context);
+                    await context.Response.WriteAsync(ex.Message + "\n" + ex.StackTrace + "\n");
                 }
             });
         }
