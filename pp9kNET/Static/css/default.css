@@ -1,6 +1,7 @@
-﻿body {
+﻿body
+{
     background: #ccc;
-    font-family: "Consolas", "mono", monospace;
+    font-family: "Consolas", "Menlo", monospace;
     text-align: center;
 }
 
@@ -25,7 +26,51 @@
     background: #333;
 }
 
+#welcome-page
+{
+    position: absolute;
+    top: 60px;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+}
+
 #welcome-page .welcome
 {
-    margin-top: 50px;
+    margin: 100px auto 0;
+}
+
+#welcome-page .new-game-div,
+#welcome-page .join-game-div
+{
+    display: inline-block;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+}
+
+#welcome-page .new-game-div
+{
+    text-align: right;
+}
+
+#welcome-page .join-game-div
+{
+    text-align: left;
+}
+
+#welcome-page .new-game-div button,
+#welcome-page .join-game-div button
+{
+    font-size: 18px;
+    color: #ccc;
+    background: #333;
+    border-style: none;
+ 
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    
+    margin: 30px;
 }

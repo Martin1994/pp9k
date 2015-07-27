@@ -24,6 +24,8 @@ namespace pp9kNET
         protected Dictionary<string, HandlerCreater> _handlers = new Dictionary<string, HandlerCreater>()
         {
             { "^/$" , WelcomeHandler.Create },
+            { "^/newgame$" , WelcomeHandler.Create },
+            { "^/game$" , WelcomeHandler.Create },
             { "^/static/(.*)$" , StaticHandler.Create("^/static/(.*)$", "./Static/{1}") },
             { "default" , ErrorHandler.Create(404) },
             { "exception" , ErrorHandler.Create(500) }

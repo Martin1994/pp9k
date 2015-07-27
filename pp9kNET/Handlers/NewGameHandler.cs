@@ -6,21 +6,19 @@ using Microsoft.AspNet.Http;
 
 namespace pp9kNET.Handlers
 {
-    public class WelcomeHandler : IHttpHandler
+    public class NewGameHandler : IHttpHandler
     {
         protected Application _app;
 
         public async Task Respond(HttpContext context)
         {
-            context.Response.ContentType = "text/html";
-            await context.Response.RenderTemplate("Header");
-            await context.Response.RenderTemplate("Welcome");
-            await context.Response.RenderTemplate("Footer");
+            context.Response.ContentType = "application/json";
+            
         }
 
         public static IHttpHandler Create(Application app)
         {
-            WelcomeHandler handler = new WelcomeHandler();
+            NewGameHandler handler = new NewGameHandler();
             handler._app = app;
             return handler;
         }

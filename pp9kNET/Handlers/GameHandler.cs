@@ -12,7 +12,6 @@ namespace pp9kNET.Handlers
 
         public async Task Respond(HttpContext context)
         {
-            context.Response.ContentType = "text/html";
             await context.Response.RenderTemplate("Header");
             await context.Response.RenderTemplate("Welcome");
             await context.Response.RenderTemplate("Footer");
