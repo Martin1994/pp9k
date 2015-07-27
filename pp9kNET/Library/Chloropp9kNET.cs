@@ -20,6 +20,7 @@ namespace pp9kNET
             set_win_handler(Wrapper, WinHandlerWrapper);
             set_draw_handler(Wrapper, DrawHandlerWrapper);
             set_show_score_handler(Wrapper, ShowScoreHandlerWrapper);
+            set_change_turn_handler(Wrapper, ChangeTurnHandlerWrapper);
         }
 
         ~Chloropp9kNET()
