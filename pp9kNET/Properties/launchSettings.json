@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "pp9k": {
+      "commandName": "pp9k",
+      "workingDirectory": "D:\\Projects\\pp9k\\pp9kNET\\Source"
+    },
+    "test": {
+      "commandName": "test",
+      "workingDirectory": "D:\\Projects\\pp9k\\pp9kNET\\"
+    }
+  }
+}
