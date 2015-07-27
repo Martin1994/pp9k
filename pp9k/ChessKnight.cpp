@@ -48,14 +48,20 @@ void ChessKnight::AddMove(Board* board, Moves* moves, int relative_x, int relati
     }
     
     // Create new move
-    before = this->Clone();
     after = new ChessKnight(this->GetPlayer(), new_x, new_y);
     captured = board->GetChess(new_x, new_y);
     
     if (captured != NULL)
     {
+        if (captured->GetPlayer() == this->GetPlayer())
+        {
+            return;
+        }
         captured = captured->Clone();
     }
+    
+    before = this->Clone();
+    
     move = new Move(before, after, captured);
     moves->AddMove(move);
 }
