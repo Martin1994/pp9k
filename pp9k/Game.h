@@ -33,7 +33,7 @@ namespace pp9k
         void Win(Color side, bool checkmate);
         
     public:
-        View* View;
+        class View* View;
         Board* CurrentBoard;
         BoardHistory* Boards;
         

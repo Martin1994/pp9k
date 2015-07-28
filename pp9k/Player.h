@@ -19,7 +19,7 @@ namespace pp9k
     class Player
     {
     protected:
-        Game* Game;
+        class Game* Game;
         Color Side;
         
     public:

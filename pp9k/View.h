@@ -19,7 +19,7 @@ namespace pp9k
     class View
     {
     protected:
-        Controller* Controller;
+        class Controller* Controller;
         
     public:
         

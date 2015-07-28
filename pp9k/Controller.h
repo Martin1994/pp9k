@@ -21,7 +21,7 @@ namespace pp9k
     class Controller
     {
     private:
-        Game* Game;
+        class Game* Game;
         
     public:
         Controller();

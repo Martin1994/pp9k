@@ -24,7 +24,7 @@ namespace pp9k
     class Chess
     {
     private:
-        Player* Player;
+        class Player* Player;
         int X;
         int Y;
         
