@@ -35,6 +35,29 @@ ViewGUI::ViewGUI(bool print_board) : ViewCLI()
         }
     }
     
+    std::string str;
+    int color = 0x333333;
+    char ch;
+    for (int i = 0; i < pp9k::BoardSize; i++)
+    {
+        ch = (char)((int)'0' + pp9k::BoardSize - i);
+        str = std::string(&ch, 1);
+        this->Window->drawBigString(
+            60 - GridWidth,
+            35 + (pp9k::BoardSize - i) * GridWidth,
+            str, color);
+    }
+    
+    for (int i = 0; i < pp9k::BoardSize; i++)
+    {
+        ch = (char)(i + (int)'a');
+        str = std::string(&ch, 1);
+        this->Window->drawBigString(
+            60 + i * GridWidth,
+            35 + (pp9k::BoardSize + 1) * GridWidth,
+            str, color);
+    }
+    
     this->Window->drawString(width / 2 - 25, height - 80, "Next", 0x333333);
     this->Window->fillRectangleRGB(width / 2 - 30, height - 75, GridWidth + 10, GridWidth + 10, 0x555555);
     this->ChangeTurn(White);
@@ -136,7 +159,7 @@ void ViewGUI::Win(Color side, bool checkmate)
     if (this->PrintBoard)
         ViewCLI::Win(side, checkmate);
 
-    Message((checkmate ? std::string("Checkmate!") : std::string("")) + (side == White ? "White" : "Black") + " wins!");
+    Message((checkmate ? std::string("Checkmate - ") : std::string("")) + (side == White ? "White" : "Black") + (checkmate ? std::string("") : std::string(" wins!")));
 }
 
 void ViewGUI::Draw()
