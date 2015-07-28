@@ -15,6 +15,9 @@ namespace pp9k
 {
     class PlayerAI : public Player
     {
+    protected:
+        void CheckDraw();
+
     public:
         PlayerAI(pp9k::Game* game, pp9k::Color side);
     };

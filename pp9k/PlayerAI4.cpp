@@ -1,5 +1,5 @@
 //
-//  PlayerAI.cpp
+//  PlayerAI4.cpp
 //  pp9k
 //
 //  Created by Martin Wang on 2015-07-25.

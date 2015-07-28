@@ -127,6 +127,12 @@ bool Controller::StartGame(std::string player1, std::string player2)
         player_ins1 = new PlayerHuman(this->Game, White);
     else if (player1 == "computer1")
         player_ins1 = new PlayerAI1(this->Game, White);
+    else if (player1 == "computer2")
+        player_ins1 = new PlayerAI2(this->Game, White);
+    else if (player1 == "computer3")
+        player_ins1 = new PlayerAI3(this->Game, White);
+    else if (player1 == "computer4")
+        player_ins1 = new PlayerAI4(this->Game, White);
     else
         return false;
 
@@ -134,6 +140,12 @@ bool Controller::StartGame(std::string player1, std::string player2)
         player_ins2 = new PlayerHuman(this->Game, Black);
     else if (player2 == "computer1")
         player_ins2 = new PlayerAI1(this->Game, Black);
+    else if (player2 == "computer2")
+        player_ins2 = new PlayerAI2(this->Game, Black);
+    else if (player2 == "computer3")
+        player_ins2 = new PlayerAI3(this->Game, Black);
+    else if (player2 == "computer4")
+        player_ins2 = new PlayerAI4(this->Game, Black);
     else
         return false;
     

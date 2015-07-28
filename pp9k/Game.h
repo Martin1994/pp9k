@@ -29,7 +29,6 @@ namespace pp9k
         GameStatus Status;
         int Score[2];
         
-        void Stalemate();
         void Win(Color side, bool checkmate);
         
     public:
@@ -52,6 +51,8 @@ namespace pp9k
         Color GetTurn();
         
         double GetScore(Color side);
+
+        void Stalemate();
         
         /**
          * Start a new game and set players

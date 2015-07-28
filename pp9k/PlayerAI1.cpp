@@ -32,4 +32,6 @@ void PlayerAI1::RequestMove()
     this->Game->MakeMove(before->GetX(), before->GetY(), after->GetX(), after->GetY(), after->GetChessType());
 
     delete moves;
+
+    CheckDraw();
 }
