@@ -1,10 +1,10 @@
-FLAG=
+FLAG=-std=c++03
 
-pp9k: main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
-	g++ $(FLAG) -o pp9k main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+pp9k: main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	g++ $(FLAG) -o pp9k main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
 
-libchloropp9k.so: libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
-	g++ $(FLAG) -fPIC -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+libchloropp9k.so: libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	g++ $(FLAG) -fPIC -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
 
 Game.o: Game.cpp Game.h
 	g++ $(FLAG) -c -o Game.o Game.cpp
@@ -26,6 +26,21 @@ Player.o: Player.cpp Player.h
 
 PlayerHuman.o: PlayerHuman.cpp PlayerHuman.h
 	g++ $(FLAG) -c -o PlayerHuman.o PlayerHuman.cpp
+
+PlayerAI.o: PlayerAI.cpp PlayerAI.h
+	g++ $(FLAG) -c -o PlayerAI.o PlayerAI.cpp
+
+PlayerAI1.o: PlayerAI1.cpp PlayerAI1.h
+	g++ $(FLAG) -c -o PlayerAI1.o PlayerAI1.cpp
+
+PlayerAI2.o: PlayerAI2.cpp PlayerAI2.h
+	g++ $(FLAG) -c -o PlayerAI2.o PlayerAI2.cpp
+
+PlayerAI3.o: PlayerAI3.cpp PlayerAI3.h
+	g++ $(FLAG) -c -o PlayerAI3.o PlayerAI3.cpp
+
+PlayerAI4.o: PlayerAI4.cpp PlayerAI4.h
+	g++ $(FLAG) -c -o PlayerAI4.o PlayerAI4.cpp
 
 Board.o: Board.cpp Board.h
 	g++ $(FLAG) -c -o Board.o Board.cpp
