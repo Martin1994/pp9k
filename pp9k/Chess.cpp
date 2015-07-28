@@ -25,7 +25,7 @@ Chess::~Chess()
 Chess* Chess::ReplacePlayer(pp9k::Player* new_player)
 {
     Chess* new_chess = this->Clone();
-	new_chess->Player = new_player;
+    new_chess->Player = new_player;
     return new_chess;
 }
 

@@ -35,10 +35,10 @@ void ChessKing::GetAvailableMoves(Board* board, Moves* moves)
     this->AddMove(board, moves, -1,  0);
     this->AddMove(board, moves,  0,  1);
     this->AddMove(board, moves,  0, -1);
-	this->AddMove(board, moves, 1, 1);
-	this->AddMove(board, moves, 1, -1);
-	this->AddMove(board, moves, -1, 1);
-	this->AddMove(board, moves, -1, -1);
+    this->AddMove(board, moves, 1, 1);
+    this->AddMove(board, moves, 1, -1);
+    this->AddMove(board, moves, -1, 1);
+    this->AddMove(board, moves, -1, -1);
     
     // Castling
     if (!this->Moved)

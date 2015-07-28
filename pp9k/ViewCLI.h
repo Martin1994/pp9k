@@ -17,8 +17,8 @@ namespace pp9k
     {
     protected:
         char BoardContent[pp9k::BoardSize * pp9k::BoardSize];
-		bool MoveRequested;
-		Color Turn;
+        bool MoveRequested;
+        Color Turn;
         
     public:
         
@@ -31,8 +31,8 @@ namespace pp9k
         void Win(Color side, bool checkmate);
         void Draw();
         void ShowScore(double score1, double score2);
-		void ChangeTurn(Color side);
-		void RequestMove(Color side);
+        void ChangeTurn(Color side);
+        void RequestMove(Color side);
         
     };
 }

@@ -43,10 +43,10 @@ bool Controller::MakeMove(int original_x, int original_y, int target_x, int targ
 
 bool pp9k::Controller::AIMove()
 {
-	if (this->Game->GetStatus() == Start)
-		this->Game->GetPlayer(this->Game->GetTurn())->RequestMove();
+    if (this->Game->GetStatus() == Start)
+        this->Game->GetPlayer(this->Game->GetTurn())->RequestMove();
 
-	return true;
+    return true;
 }
 
 bool Controller::Undo()
@@ -119,21 +119,21 @@ bool Controller::StartGame(std::string player1, std::string player2)
 {
     Player* player_ins1;
     Player* player_ins2;
-	
-	if (player1 == "human")
-		player_ins1 = new PlayerHuman(this->Game, White);
-	else if (player1 == "computer1")
-		player_ins1 = new PlayerAI1(this->Game, White);
-	else
-		return false;
+    
+    if (player1 == "human")
+        player_ins1 = new PlayerHuman(this->Game, White);
+    else if (player1 == "computer1")
+        player_ins1 = new PlayerAI1(this->Game, White);
+    else
+        return false;
 
-	if (player2 == "human")
-		player_ins2 = new PlayerHuman(this->Game, Black);
-	else if (player2 == "computer1")
-		player_ins2 = new PlayerAI1(this->Game, Black);
-	else
-		return false;
-	
+    if (player2 == "human")
+        player_ins2 = new PlayerHuman(this->Game, Black);
+    else if (player2 == "computer1")
+        player_ins2 = new PlayerAI1(this->Game, Black);
+    else
+        return false;
+    
     return this->Game->Start(player_ins1, player_ins2);
 }
 
@@ -144,7 +144,7 @@ bool Controller::SetTurn(Color side)
 
 bool Controller::RefreshBoard()
 {
-	return this->Game->RefreshBoard();
+    return this->Game->RefreshBoard();
 }
 
 bool Controller::Exit()

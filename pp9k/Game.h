@@ -44,7 +44,7 @@ namespace pp9k
         
         pp9k::View* GetView();
 
-		GameStatus GetStatus();
+        GameStatus GetStatus();
         
         Player* GetPlayer(pp9k::Color side);
         
@@ -80,7 +80,7 @@ namespace pp9k
         
         bool Undo();
 
-		bool RefreshBoard();
+        bool RefreshBoard();
         
         bool Exit();
         

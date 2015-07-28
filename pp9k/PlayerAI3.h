@@ -13,12 +13,12 @@
 
 namespace pp9k
 {
-	class PlayerAI3 : public PlayerAI
-	{
-	public:
-		PlayerAI3(pp9k::Game* game, pp9k::Color side);
-		void RequestMove();
-	};
+    class PlayerAI3 : public PlayerAI
+    {
+    public:
+        PlayerAI3(pp9k::Game* game, pp9k::Color side);
+        void RequestMove();
+    };
 }
 
 #endif /* defined(__pp9k__PlayerAI3__) */

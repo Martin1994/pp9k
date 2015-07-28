@@ -20,16 +20,16 @@ PlayerAI1::PlayerAI1(pp9k::Game* game, pp9k::Color side) : PlayerAI(game, side)
 
 void PlayerAI1::RequestMove()
 {
-	Moves* moves = this->Game->CurrentBoard->GetAllAvailableMoves(this->Side);
+    Moves* moves = this->Game->CurrentBoard->GetAllAvailableMoves(this->Side);
 
-	srand (time(NULL));
-	int index = rand() % moves->GetLength();
+    srand (time(NULL));
+    int index = rand() % moves->GetLength();
 
-	Move* move = moves->GetMove(index);
-	Chess* before = move->GetChessBeforeMove();
-	Chess* after = move->GetChessAfterMove();
+    Move* move = moves->GetMove(index);
+    Chess* before = move->GetChessBeforeMove();
+    Chess* after = move->GetChessAfterMove();
 
-	this->Game->MakeMove(before->GetX(), before->GetY(), after->GetX(), after->GetY(), after->GetChessType());
+    this->Game->MakeMove(before->GetX(), before->GetY(), after->GetX(), after->GetY(), after->GetChessType());
 
-	delete moves;
+    delete moves;
 }

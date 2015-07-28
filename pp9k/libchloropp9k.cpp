@@ -37,7 +37,7 @@ extern "C"
             controller = new pp9k::Controller();
             game = new pp9k::Game();
             view = new pp9k::ViewWrapper();
-			
+            
             controller->SetGame(game);
             game->SetView(view);
             view->SetController(controller);
@@ -61,32 +61,32 @@ extern "C"
     EXPORT int pp9k_type_knight() { return static_cast<int>(pp9k::Knight); }
     EXPORT int pp9k_type_pawn() { return static_cast<int>(pp9k::Pawn); }
     
-	EXPORT void* create_pp9k()
+    EXPORT void* create_pp9k()
     {
         return new pp9k_wrapper;
     }
     
-	EXPORT void destroy_pp9k(void* wrapper)
+    EXPORT void destroy_pp9k(void* wrapper)
     {
         delete (pp9k_wrapper*) wrapper;
     }
     
-	EXPORT bool make_move(void* wrapper, int original_x, int original_y, int target_x, int target_y)
+    EXPORT bool make_move(void* wrapper, int original_x, int original_y, int target_x, int target_y)
     {
         return ((pp9k_wrapper*) wrapper)->controller->MakeMove(original_x, original_y, target_x, target_y);
     }
     
-	EXPORT bool undo(void* wrapper)
+    EXPORT bool undo(void* wrapper)
     {
         return ((pp9k_wrapper*) wrapper)->controller->Undo();
     }
     
-	EXPORT bool resign(void* wrapper)
+    EXPORT bool resign(void* wrapper)
     {
         return ((pp9k_wrapper*) wrapper)->controller->Resign();
     }
     
-	EXPORT bool start_game(void* wrapper, int player1, int player2)
+    EXPORT bool start_game(void* wrapper, int player1, int player2)
     {
         std::string p1s;
         std::string p2s;
@@ -142,65 +142,65 @@ extern "C"
         return ((pp9k_wrapper*) wrapper)->controller->StartGame(p1s, p2s);
     }
     
-	EXPORT bool setup(void* wrapper, int x, int y, int type, int side = static_cast<int>(pp9k::White))
+    EXPORT bool setup(void* wrapper, int x, int y, int type, int side = static_cast<int>(pp9k::White))
     {
         return ((pp9k_wrapper*) wrapper)->controller->Setup(x, y, static_cast<pp9k::ChessType>(type), static_cast<pp9k::Color>(side));
     }
     
-	EXPORT bool initialize_complete(void* wrapper)
+    EXPORT bool initialize_complete(void* wrapper)
     {
         return ((pp9k_wrapper*) wrapper)->controller->InitializeComplete();
     }
     
-	EXPORT bool initialize_game(void* wrapper)
+    EXPORT bool initialize_game(void* wrapper)
     {
         return ((pp9k_wrapper*) wrapper)->controller->InitializeGame();
     }
     
-	EXPORT bool set_turn(void* wrapper, int side)
+    EXPORT bool set_turn(void* wrapper, int side)
     {
         return ((pp9k_wrapper*) wrapper)->controller->SetTurn(static_cast<pp9k::Color>(side));
     }
     
-	EXPORT bool exit_game(void* wrapper)
+    EXPORT bool exit_game(void* wrapper)
     {
         return ((pp9k_wrapper*) wrapper)->controller->Exit();
     }
 
-	EXPORT bool refresh_board(void* wrapper)
-	{
-		return ((pp9k_wrapper*)wrapper)->controller->RefreshBoard();
-	}
+    EXPORT bool refresh_board(void* wrapper)
+    {
+        return ((pp9k_wrapper*)wrapper)->controller->RefreshBoard();
+    }
     
-	EXPORT void set_change_board_handler(void* wrapper, pp9k::ViewWrapper::ChangeBoardFunc handler)
+    EXPORT void set_change_board_handler(void* wrapper, pp9k::ViewWrapper::ChangeBoardFunc handler)
     {
         ((pp9k_wrapper*) wrapper)->view->ChangeBoardHandler = handler;
     }
     
-	EXPORT void set_flush_board_handler(void* wrapper, pp9k::ViewWrapper::FlushBoardFunc handler)
+    EXPORT void set_flush_board_handler(void* wrapper, pp9k::ViewWrapper::FlushBoardFunc handler)
     {
         ((pp9k_wrapper*) wrapper)->view->FlushBoardHandler = handler;
     }
     
-	EXPORT void set_win_handler(void* wrapper, pp9k::ViewWrapper::WinFunc handler)
+    EXPORT void set_win_handler(void* wrapper, pp9k::ViewWrapper::WinFunc handler)
     {
         ((pp9k_wrapper*) wrapper)->view->WinHandler = handler;
     }
     
-	EXPORT void set_draw_handler(void* wrapper, pp9k::ViewWrapper::DrawFunc handler)
+    EXPORT void set_draw_handler(void* wrapper, pp9k::ViewWrapper::DrawFunc handler)
     {
         ((pp9k_wrapper*) wrapper)->view->DrawHandler = handler;
     }
     
-	EXPORT void set_show_score_handler(void* wrapper, pp9k::ViewWrapper::ShowScoreFunc handler)
+    EXPORT void set_show_score_handler(void* wrapper, pp9k::ViewWrapper::ShowScoreFunc handler)
     {
         ((pp9k_wrapper*) wrapper)->view->ShowScoreHandler = handler;
     }
 
-	EXPORT void set_change_turn_handler(void* wrapper, pp9k::ViewWrapper::ChangeTurnFunc handler)
-	{
-		((pp9k_wrapper*)wrapper)->view->ChangeTurnHandler = handler;
-	}
+    EXPORT void set_change_turn_handler(void* wrapper, pp9k::ViewWrapper::ChangeTurnFunc handler)
+    {
+        ((pp9k_wrapper*)wrapper)->view->ChangeTurnHandler = handler;
+    }
     
     
 #ifdef __cplusplus

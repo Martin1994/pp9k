@@ -25,10 +25,10 @@ Game::Game()
 
 Game::~Game()
 {
-	delete this->Players[0];
-	delete this->Players[1];
-	delete this->Boards;
-	delete this->CurrentBoard;
+    delete this->Players[0];
+    delete this->Players[1];
+    delete this->Boards;
+    delete this->CurrentBoard;
 }
 
 void Game::SetView(pp9k::View* view)
@@ -43,7 +43,7 @@ pp9k::View* Game::GetView()
 
 GameStatus Game::GetStatus()
 {
-	return this->Status;
+    return this->Status;
 }
 
 Player* Game::GetPlayer(pp9k::Color side)
@@ -66,14 +66,14 @@ bool Game::SetTurn(Color side)
     }
     
     this->CurrentBoard->SetTurn(side);
-	this->View->ChangeTurn(this->GetTurn());
+    this->View->ChangeTurn(this->GetTurn());
     
     return true;
 }
 
 Color Game::GetTurn()
 {
-	return this->CurrentBoard->GetTurn();
+    return this->CurrentBoard->GetTurn();
 }
 
 double Game::GetScore(Color side)
@@ -88,7 +88,7 @@ bool Game::Start(Player* player1, Player* player2)
         // error to view
         return false;
     }
-	
+    
     if (this->CurrentBoard == NULL)
     {
         this->CurrentBoard = Board::CreateStandardBoard(player1, player2);
@@ -99,7 +99,7 @@ bool Game::Start(Player* player1, Player* player2)
         delete this->CurrentBoard;
         this->CurrentBoard = new_board;
     }
-	
+    
     // Update view
     for (int i = 0; i < pp9k::BoardSize; i++)
     {
@@ -110,26 +110,26 @@ bool Game::Start(Player* player1, Player* player2)
             {
                 this->View->ChangeBoard(i, j, Blank);
             }
-			else
-			{
-				this->View->ChangeBoard(i, j, piece->GetChessType(), piece->GetPlayer()->GetSide());
+            else
+            {
+                this->View->ChangeBoard(i, j, piece->GetChessType(), piece->GetPlayer()->GetSide());
             }
         }
     }
     this->View->FlushBoard();
-	this->View->ChangeTurn(this->GetTurn());
-	
+    this->View->ChangeTurn(this->GetTurn());
+    
     delete this->Boards;
     this->Boards = new BoardHistory();
-	
+    
     delete this->Players[0];
     this->Players[0] = player1;
     delete this->Players[1];
     this->Players[1] = player2;
-	
+    
     this->Status = pp9k::Start;
 
-	this->View->RequestMove(this->GetTurn());
+    this->View->RequestMove(this->GetTurn());
     
     return true;
 }
@@ -157,7 +157,7 @@ bool Game::Initialize()
         }
     }
     this->View->FlushBoard();
-	this->View->ChangeTurn(this->GetTurn());
+    this->View->ChangeTurn(this->GetTurn());
     
     return true;
 }
@@ -278,11 +278,11 @@ bool Game::Undo()
 
 bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, ChessType prefer)
 {
-	// Check game status
-	if (this->Status != pp9k::Start)
-	{
-		return false;
-	}
+    // Check game status
+    if (this->Status != pp9k::Start)
+    {
+        return false;
+    }
 
     // Check boundary
     if (   original_x < 0 || original_x >= pp9k::BoardSize
@@ -306,10 +306,10 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, 
     for (int i = 0; i < moves->GetLength(); i++)
     {
         Move* move = moves->GetMove(i);
-		Chess* before = move->GetChessBeforeMove();
+        Chess* before = move->GetChessBeforeMove();
         Chess* after = move->GetChessAfterMove();
         if (after->GetX() == target_x && after->GetY() == target_y &&
-			(before->GetChessType() == after->GetChessType() || prefer == after->GetChessType()))
+            (before->GetChessType() == after->GetChessType() || prefer == after->GetChessType()))
         {
             // Make this move
             this->Boards->PushBoard(this->CurrentBoard);
@@ -333,7 +333,7 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, 
                 move = move->GetSubMove();
             }
             this->View->FlushBoard();
-			this->View->ChangeTurn(this->GetTurn());
+            this->View->ChangeTurn(this->GetTurn());
             
             // Check if this game has ended
             Color opponent = this->CurrentBoard->GetTurn() == White ? Black : White;
@@ -351,7 +351,7 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, 
             else
             {
                 // Request move
-				this->View->RequestMove(this->GetTurn());
+                this->View->RequestMove(this->GetTurn());
             }
             
             delete moves;
@@ -367,9 +367,9 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, 
 
 bool Game::RefreshBoard()
 {
-	this->View->FlushBoard();
-	this->View->ChangeTurn(this->GetTurn());
-	return true;
+    this->View->FlushBoard();
+    this->View->ChangeTurn(this->GetTurn());
+    return true;
 }
 
 bool Game::Exit()

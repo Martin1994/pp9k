@@ -16,7 +16,7 @@ namespace pp9k
     class PlayerAI1 : public PlayerAI
     {
     public:
-		PlayerAI1(pp9k::Game* game, pp9k::Color side);
+        PlayerAI1(pp9k::Game* game, pp9k::Color side);
         void RequestMove();
     };
 }
