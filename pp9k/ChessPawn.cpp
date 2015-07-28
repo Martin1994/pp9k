@@ -102,6 +102,7 @@ void ChessPawn::GetAvailableMoves(Board* board, Moves* moves)
             Chess* nearby = board->GetChess(new_x, this->GetY());
             // En passant
             if (   captured == NULL
+				&& nearby != NULL
                 && nearby == board->GetLastMovedChess()
                 && nearby->GetChessType() == Pawn
                 && !((ChessPawn*) nearby)->MovedTwice)

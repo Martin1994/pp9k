@@ -27,7 +27,8 @@ namespace pp9k
         Controller();
         ~Controller();
         void SetGame(pp9k::Game* game);
-        bool MakeMove(int original_x, int original_y, int target_x, int target_y);
+        bool MakeMove(int original_x, int original_y, int target_x, int target_y, ChessType prefer = Queen);
+		bool AIMove();
         bool Undo();
         bool Resign();
         bool StartGame(std::string player1, std::string player2);

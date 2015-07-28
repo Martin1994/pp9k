@@ -65,3 +65,8 @@ void ViewWrapper::ChangeTurn(Color side)
 	if (this->ChangeTurnHandler != NULL)
 		ChangeTurnHandler(static_cast<int>(side));
 }
+
+void ViewWrapper::RequestMove(Color side)
+{
+
+}

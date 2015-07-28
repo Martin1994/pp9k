@@ -43,6 +43,8 @@ namespace pp9k
         void SetView(pp9k::View* view);
         
         pp9k::View* GetView();
+
+		GameStatus GetStatus();
         
         Player* GetPlayer(pp9k::Color side);
         
@@ -70,7 +72,7 @@ namespace pp9k
         
         bool RemovePiece(int x, int y);
         
-        bool MakeMove(int original_x, int original_y, int target_x, int target_y);
+        bool MakeMove(int original_x, int original_y, int target_x, int target_y, ChessType prefer);
         
         bool Resign();
         

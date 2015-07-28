@@ -46,6 +46,7 @@ namespace pp9k
         void Draw();
         void ShowScore(double score1, double score2);
 		void ChangeTurn(Color side);
+		void RequestMove(Color side);
         
     };
 }

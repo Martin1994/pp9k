@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <cctype>
 #include "ViewCLI.h"
 #include "Version.h"
 
@@ -21,11 +22,17 @@ ViewCLI::ViewCLI()
     }
     
     // Welcome message
-    std::cout << "Welcome to ChloroPawnPusher9000 v"
-              << pp9k::Version[0] << '.' << pp9k::Version[1]
-              << " (CLI mode) !" << std::endl
-              << "To enable GUI, add \"--graphics\"." << std::endl
-              << "To get command list, type \"help\"." << std::endl;
+    std::cout
+		<< "Welcome to ChloroPawnPusher9000 v"
+        << pp9k::Version[0] << '.' << pp9k::Version[1]
+        << " (CLI mode) !" << std::endl
+        << "To disable GUI, add \"--nographics\"." << std::endl
+		<< "To disable CLI board, add \"--nocliboard\"." << std::endl
+        << "To get command list, type \"help\"." << std::endl
+		<< "To load a game board, add the file name as parameter." << std::endl;
+
+	this->Turn = White;
+	this->MoveRequested = false;
 }
 
 ViewCLI::~ViewCLI()
@@ -116,17 +123,22 @@ void ViewCLI::GetCommand()
     
     while (true)
     {
+		if (this->MoveRequested)
+		{
+			this->MoveRequested = false;
+
+			this->Controller->AIMove();
+
+			continue;
+		}
+
         std::cin >> cmd;
         
-        if (std::cin.fail())
+        if (std::cin.eof() || cmd == "exit")
         {
-            if (std::cin.eof())
-            {
-                // Print score
-                this->Controller->Exit();
-                break;
-            }
-            // TODO: error
+            // Print score
+            this->Controller->Exit();
+            break;
         }
         else if (cmd == "game")
         {
@@ -170,14 +182,45 @@ void ViewCLI::GetCommand()
         {
             
             std::cin >> cmd;
+			if (cmd.length() < 2)
+			{
+				std::cout << "Invalid position \"" << cmd << "\"." << std::endl;
+			}
             int original_x = (int)cmd.at(0) - (int)'a';
             int original_y = (int)cmd.at(1) - (int)'1';
             
             std::cin >> cmd;
+			if (cmd.length() < 2)
+			{
+				std::cout << "Invalid position \"" << cmd << "\"." << std::endl;
+			}
             int target_x = (int)cmd.at(0) - (int)'a';
             int target_y = (int)cmd.at(1) - (int)'1';
+
+			ChessType prefer = Queen;
+			if (cmd.length() > 2)
+			{
+				switch ((char)tolower(cmd.at(2)))
+				{
+					case 'q':
+						prefer = Queen;
+						break;
+
+					case 'r':
+						prefer = Rook;
+						break;
+
+					case 'b':
+						prefer = Bishop;
+						break;
+
+					case 'n':
+						prefer = Knight;
+						break;
+				}
+			}
             
-            bool succeed = this->Controller->MakeMove(original_x, original_y, target_x,target_y);
+            bool succeed = this->Controller->MakeMove(original_x, original_y, target_x, target_y, prefer);
             
             if (!succeed)
             {
@@ -215,6 +258,11 @@ void ViewCLI::GetCommand()
                 else if (cmd == "+")
                 {
                     std::cin >> cmd;
+
+					if (cmd.length() < 1)
+					{
+						std::cout << "Invalid piece type \"" << cmd << "\"." << std::endl;
+					}
                     
                     ChessType type = Blank;
                     Color side = White;
@@ -294,6 +342,10 @@ void ViewCLI::GetCommand()
                     }
                     
                     std::cin >> cmd;
+					if (cmd.length() < 2)
+					{
+						std::cout << "Invalid position \"" << cmd << "\"." << std::endl;
+					}
                     int x = (int)cmd.at(0) - (int)'a';
                     int y = (int)cmd.at(1) - (int)'1';
                     
@@ -306,6 +358,10 @@ void ViewCLI::GetCommand()
                 else if (cmd == "-")
                 {
                     std::cin >> cmd;
+					if (cmd.length() < 2)
+					{
+						std::cout << "Invalid position \"" << cmd << "\"." << std::endl;
+					}
                     int x = (int)cmd.at(0) - (int)'a';
                     int y = (int)cmd.at(1) - (int)'1';
                     
@@ -337,8 +393,42 @@ void ViewCLI::GetCommand()
         }
         else if (cmd == "help")
         {
-            // TODO
-            std::cout << "Some help." << std::endl;
+			std::cout
+				<< "Color is either \"White\" or \"Black\"." << std::endl
+				<< "Player is one of \"human\" \"computer1\" \"computer2\" \"computer3\" \"computer4\"" << std::endl
+				<< "Position is a combination of two characters: a lowercase letter and a number. e.g. e3 represents the coordination (5, 3)." << std::endl
+				<< "Type is an upper case letter. K: King; Q: Queen; B: Bishop; R: Rook; N: Knight; P: Pawn" << std::endl
+				<< std::endl
+				<< "exit" << std::endl
+				<< "	Exit this program and show score board." << std::endl
+				<< std::endl
+				<< "game [Player] [Player]" << std::endl
+				<< "	Start game. First player is white." << std::endl
+				<< std::endl
+				<< "help" << std::endl
+				<< "	Print command help." << std::endl
+				<< std::endl
+				<< "move [Position] [Position]*" << std::endl
+				<< "	Move from the first position to the second position." << std::endl
+				<< "	To specify a promotion of a pawn, you can add a [Type] next to the second position. e.g. move e7 e8Q" << std::endl
+				<< "	If you don't specify a type, it will become a queen." << std::endl
+				<< std::endl
+				<< "resign" << std::endl
+				<< "	Resign the game." << std::endl
+				<< std::endl
+				<< "setup" << std::endl
+				<< "	Enter setup mode. Setup the game board before game started. You can use the following commands during this mode:" << std::endl
+				<< "	+ [Type] [Position]" << std::endl
+				<< "		Add a piece" << std::endl
+				<< "	- [Position]" << std::endl
+				<< "		Remove a piece" << std::endl
+				<< "	= [Color]" << std::endl
+				<< "		Let [Color] be the first player to move." << std::endl
+				<< "	done" << std::endl
+				<< "		Exit setup mode." << std::endl
+				<< std::endl
+				<< "undo" << std::endl
+				<< "	Undo the previous step. (*NOT IMPLEMENTED*)" << std::endl;
         }
         else
         {
@@ -379,4 +469,9 @@ void ViewCLI::ShowScore(double score1, double score2)
 void ViewCLI::ChangeTurn(Color side)
 {
 
+}
+
+void ViewCLI::RequestMove(Color side)
+{
+	this->MoveRequested = true;
 }

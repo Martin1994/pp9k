@@ -1,40 +1,36 @@
 //
-//  ViewCLI.h
+//  ViewGUI.h
 //  pp9k
 //
 //  Created by Martin Wang on 2015-07-20.
 //  Copyright (c) 2015 Martin Chloride. All rights reserved.
 //
 
-#ifndef __pp9k__ViewCLI__
-#define __pp9k__ViewCLI__
+#ifndef __pp9k__ViewGUI__
+#define __pp9k__ViewGUI__
 
-#include "View.h"
+#include "ViewCLI.h"
 
 namespace pp9k
 {
-    class ViewCLI : public View
+    class ViewGUI : public ViewCLI
     {
     protected:
-        char BoardContent[pp9k::BoardSize * pp9k::BoardSize];
-		bool MoveRequested;
-		Color Turn;
+		bool PrintBoard;
         
     public:
-        
-        ViewCLI();
-        ~ViewCLI();
+
+		ViewGUI(bool print_board);
+        ~ViewGUI();
         
         void ChangeBoard(int x, int y, ChessType type, Color side);
         void FlushBoard();
-        void GetCommand();
         void Win(Color side, bool checkmate);
         void Draw();
         void ShowScore(double score1, double score2);
 		void ChangeTurn(Color side);
-		void RequestMove(Color side);
         
     };
 }
 
-#endif /* defined(__pp9k__ViewCLI__) */
+#endif /* defined(__pp9k__ViewGUI__) */

@@ -35,6 +35,10 @@ void ChessKing::GetAvailableMoves(Board* board, Moves* moves)
     this->AddMove(board, moves, -1,  0);
     this->AddMove(board, moves,  0,  1);
     this->AddMove(board, moves,  0, -1);
+	this->AddMove(board, moves, 1, 1);
+	this->AddMove(board, moves, 1, -1);
+	this->AddMove(board, moves, -1, 1);
+	this->AddMove(board, moves, -1, -1);
     
     // Castling
     if (!this->Moved)
@@ -132,7 +136,7 @@ void ChessKing::AddMove(Board* board, Moves* moves, int relative_x, int relative
     }
     
     Chess* before = this->Clone();
-    Chess* after = new ChessKing(this->GetPlayer(), this->GetX(), this->GetY(), true);
+    Chess* after = new ChessKing(this->GetPlayer(), new_x, new_y, true);
     Chess* captured = board->GetChess(new_x, new_y);
     
     if (captured != NULL)

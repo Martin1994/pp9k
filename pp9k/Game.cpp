@@ -18,14 +18,17 @@ Game::Game()
     this->CurrentBoard = NULL;
     this->Boards = NULL;
     this->Players[0] = new PlayerHuman(this, White);
-    this->Players[1] = new PlayerHuman(this, White);
+    this->Players[1] = new PlayerHuman(this, Black);
     this->Score[0] = 0;
     this->Score[1] = 0;
 }
 
 Game::~Game()
 {
-    
+	delete this->Players[0];
+	delete this->Players[1];
+	delete this->Boards;
+	delete this->CurrentBoard;
 }
 
 void Game::SetView(pp9k::View* view)
@@ -36,6 +39,11 @@ void Game::SetView(pp9k::View* view)
 pp9k::View* Game::GetView()
 {
     return this->View;
+}
+
+GameStatus Game::GetStatus()
+{
+	return this->Status;
 }
 
 Player* Game::GetPlayer(pp9k::Color side)
@@ -120,6 +128,8 @@ bool Game::Start(Player* player1, Player* player2)
     this->Players[1] = player2;
 	
     this->Status = pp9k::Start;
+
+	this->View->RequestMove(this->GetTurn());
     
     return true;
 }
@@ -266,8 +276,14 @@ bool Game::Undo()
     return false;
 }
 
-bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
+bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y, ChessType prefer)
 {
+	// Check game status
+	if (this->Status != pp9k::Start)
+	{
+		return false;
+	}
+
     // Check boundary
     if (   original_x < 0 || original_x >= pp9k::BoardSize
         || original_y < 0 || original_y >= pp9k::BoardSize
@@ -290,8 +306,10 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
     for (int i = 0; i < moves->GetLength(); i++)
     {
         Move* move = moves->GetMove(i);
+		Chess* before = move->GetChessBeforeMove();
         Chess* after = move->GetChessAfterMove();
-        if (after->GetX() == target_x && after->GetY() == target_y)
+        if (after->GetX() == target_x && after->GetY() == target_y &&
+			(before->GetChessType() == after->GetChessType() || prefer == after->GetChessType()))
         {
             // Make this move
             this->Boards->PushBoard(this->CurrentBoard);
@@ -333,7 +351,7 @@ bool Game::MakeMove(int original_x, int original_y, int target_x, int target_y)
             else
             {
                 // Request move
-                this->Players[this->CurrentBoard->GetTurn() == White ? 0 : 1]->RequestMove();
+				this->View->RequestMove(this->GetTurn());
             }
             
             delete moves;

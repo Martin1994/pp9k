@@ -191,7 +191,7 @@ bool Board::IsValid()
     int black_king = 0;
     for (int i = 0; i < pp9k::BoardSize * pp9k::BoardSize; i++)
     {
-        if (this->Chesses[i]->GetChessType())
+        if (this->Chesses[i] != NULL && this->Chesses[i]->GetChessType() == King)
         {
             if (this->Chesses[i]->GetPlayer()->GetSide() == White)
             {
@@ -209,7 +209,7 @@ bool Board::IsValid()
 
 bool Board::IsCheck(Color side)
 {
-    Moves* moves = new Moves();
+	Moves* moves = new Moves();
     
     int j =0;
     for (int i = 0; i < BoardSize * BoardSize; i++)

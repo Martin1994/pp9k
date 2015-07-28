@@ -6,6 +6,19 @@
 //  Copyright (c) 2015 Martin Chloride. All rights reserved.
 //
 
+#if defined(_MSC_VER)
+    #if defined(_DEBUG)
+        #include <stdlib.h>
+        #include <crtdbg.h>
+        
+        #ifndef DBG_NEW
+            #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+            #define new DBG_NEW
+        #endif
+        
+    #endif
+#endif
+
 #include "Game.h"
 #include "ViewCLI.h"
 #include "Controller.h"
@@ -21,6 +34,16 @@ int main(int argc, const char * argv[])
     controller->SetGame(game);
     
     view->GetCommand();
-    
+
+	delete game;
+	delete view;
+	delete controller;
+
+	#if defined(_MSC_VER)
+	    #if defined(_DEBUG)
+	        _CrtDumpMemoryLeaks();
+	    #endif
+	#endif
+
     return 0;
 }

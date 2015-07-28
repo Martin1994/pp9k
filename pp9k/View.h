@@ -33,6 +33,7 @@ namespace pp9k
         virtual void Draw() = 0;
         virtual void ShowScore(double score1, double score2) = 0;
 		virtual void ChangeTurn(Color side) = 0;
+		virtual void RequestMove(Color side) = 0;
     };
     
     
