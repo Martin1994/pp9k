@@ -134,13 +134,19 @@ void ChessKing::AddMove(Board* board, Moves* moves, int relative_x, int relative
     {
         return;
     }
-    
-    Chess* before = this->Clone();
-    Chess* after = new ChessKing(this->GetPlayer(), new_x, new_y, true);
     Chess* captured = board->GetChess(new_x, new_y);
     
     if (captured != NULL)
+    {
+        if (captured->GetPlayer() == this->GetPlayer())
+        {
+            return;
+        }
         captured = captured->Clone();
+    }
+
+    Chess* before = this->Clone();
+    Chess* after = new ChessKing(this->GetPlayer(), new_x, new_y, true);
     
     moves->AddMove(new Move(before, after, captured));
 }
