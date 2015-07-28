@@ -17,6 +17,7 @@ namespace pp9k
     {
     protected:
 		bool PrintBoard;
+		Xwindow* Window;
         
     public:
 
