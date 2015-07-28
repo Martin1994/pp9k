@@ -15,6 +15,9 @@ namespace pp9k
 {
     class PlayerAI4 : public PlayerAI
     {
+    protected:
+        static int TypeToRank(ChessType type);
+
     public:
         PlayerAI4(pp9k::Game* game, pp9k::Color side);
         void RequestMove();
