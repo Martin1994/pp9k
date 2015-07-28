@@ -10,6 +10,7 @@
 #define __pp9k__ViewGUI__
 
 #include "ViewCLI.h"
+#include "window.h"
 
 namespace pp9k
 {
@@ -18,6 +19,9 @@ namespace pp9k
     protected:
 		bool PrintBoard;
 		Xwindow* Window;
+        static const int GridWidth = 50;
+        void FillGrid(int x, int y);
+        void Message(std::string msg);
         
     public:
 

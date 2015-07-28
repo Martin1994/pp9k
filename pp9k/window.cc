@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Xwindow::Xwindow(int width, int height): width(width), height(height) {
+Xwindow::Xwindow(int width, int height, int back, int front, const char* title): width(width), height(height) {
 
   d = XOpenDisplay(NULL);
   if (d == NULL) {
@@ -17,8 +17,9 @@ Xwindow::Xwindow(int width, int height): width(width), height(height) {
     exit(1);
   }
   s = DefaultScreen(d);
-  w = XCreateSimpleWindow(d, RootWindow(d, s), 10, 10, width, height, 1,
-                          BlackPixel(d, s), WhitePixel(d, s));
+  w = XCreateSimpleWindow(d, RootWindow(d, s), 0, 0, width, height, 1,
+                          back, front);
+  XStoreName(d, w, title);
   XSelectInput(d, w, ExposureMask | KeyPressMask);
   XMapRaised(d, w);
 
@@ -74,9 +75,24 @@ void Xwindow::fillRectangle(int x, int y, int width, int height, int colour) {
   XSetForeground(d, gc, colours[Black]);
 }
 
+void Xwindow::fillRectangleRGB(int x, int y, int width, int height, int colour) {
+  XSetForeground(d, gc, colour);
+  XFillRectangle(d, w, gc, x, y, width, height);
+  XSetForeground(d, gc, colour);
+}
+
 void Xwindow::drawString(int x, int y, string msg, int colour) {
-  XSetForeground(d, gc, colours[colour]);
+  XSetForeground(d, gc, colour);
   Font f = XLoadFont(d, "6x13");
+  
+  std::string name = "-*-*-bold-r-*-*-18-*-*-*-m-*-*-*";
+
+  XFontStruct * fStruct = XLoadQueryFont(d, name.c_str());
+
+  if (fStruct) { //font was found, replace default
+    f = fStruct->fid;
+  }
+  
   XTextItem ti;
   ti.chars = const_cast<char*>(msg.c_str());
   ti.nchars = msg.length();
@@ -89,7 +105,7 @@ void Xwindow::drawString(int x, int y, string msg, int colour) {
 
 
 void Xwindow::drawBigString(int x, int y, string msg, int colour) {
-  XSetForeground(d, gc, colours[colour]);
+  XSetForeground(d, gc, colour);
 
 
   //set default font
@@ -98,7 +114,7 @@ void Xwindow::drawBigString(int x, int y, string msg, int colour) {
 
   // Font f = XLoadFont(d, "-*-helvetica-bold-r-normal--*-240-*-*-*-*-*");
   ostringstream name;
-  name << "-*-helvetica-bold-r-*-*-*-240-" << width/5 << "-" << height/5 << "-*-*-*-*";
+  name << "-*-*-bold-r-*-*-40-*-*-*-m-*-*-*";
 
   XFontStruct * fStruct = XLoadQueryFont(d, name.str().c_str());
 

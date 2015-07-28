@@ -1,10 +1,10 @@
-FLAG=-std=c++03
+FLAG=-std=c++03 -fPIC
 
-pp9k: main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
-	g++ $(FLAG) -o pp9k main.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+pp9k: main.cpp Game.o Controller.o Xwindow.o View.o ViewCLI.o ViewGUI.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	g++ $(FLAG) -o pp9k main.cpp Game.o Controller.o Xwindow.o View.o ViewCLI.o ViewGUI.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o -lX11
 
-libchloropp9k.so: libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
-	g++ $(FLAG) -fPIC -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+libchloropp9k.so: libchloropp9k.cpp Game.o Controller.o View.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	g++ $(FLAG) -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
 
 Game.o: Game.cpp Game.h
 	g++ $(FLAG) -c -o Game.o Game.cpp
@@ -12,11 +12,17 @@ Game.o: Game.cpp Game.h
 Controller.o: Controller.cpp Controller.h
 	g++ $(FLAG) -c -o Controller.o Controller.cpp
 
+Xwindow.o: window.cc window.h
+	g++ $(FLAG) -c -o Xwindow.o window.cc
+
 View.o: View.cpp View.h
 	g++ $(FLAG) -c -o View.o View.cpp
 
 ViewCLI.o: ViewCLI.cpp ViewCLI.h
 	g++ $(FLAG) -c -o ViewCLI.o ViewCLI.cpp
+
+ViewGUI.o: ViewGUI.cpp ViewGUI.h
+	g++ $(FLAG) -c -o ViewGUI.o ViewGUI.cpp
 
 ViewWrapper.o: ViewWrapper.cpp ViewWrapper.h
 	g++ $(FLAG) -c -o ViewWrapper.o ViewWrapper.cpp
@@ -73,4 +79,4 @@ ChessPawn.o: ChessPawn.cpp ChessPawn.h
 	g++ $(FLAG) -c -o ChessPawn.o ChessPawn.cpp
 
 clean:
-	rm Game.o Controller.o View.o ViewCLI.o ViewWrapper.o Player.o PlayerHuman.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	rm Game.o Controller.o Xwindow.o View.o ViewCLI.o ViewGUI.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
