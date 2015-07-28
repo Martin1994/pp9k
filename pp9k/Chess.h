@@ -47,6 +47,8 @@ namespace pp9k
         int GetX();
         int GetY();
         virtual ChessType GetChessType() = 0;
+
+        static bool ConvertCharToField(char ch, ChessType* type, Color* side);
         
     };
 }

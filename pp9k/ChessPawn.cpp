@@ -112,7 +112,7 @@ void ChessPawn::GetAvailableMoves(Board* board, Moves* moves)
             
             if (captured != NULL && captured->GetPlayer() != this->GetPlayer())
             {
-                if (new_y == pp9k::BoardSize - 1 || new_y - direction == 0)
+                if (new_y == pp9k::BoardSize - 1 || new_y == 0)
                 {
                     // Promotion
                     after = new ChessQueen(player, new_x, new_y);

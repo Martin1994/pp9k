@@ -269,77 +269,11 @@ void ViewCLI::GetCommand()
                     ChessType type = Blank;
                     Color side = White;
                     
-                    succeed = true;
-                    switch (cmd.at(0))
-                    {
-                        case 'K':
-                            type = King;
-                            side = White;
-                            break;
-                            
-                        case 'k':
-                            type = King;
-                            side = Black;
-                            break;
-                            
-                        case 'Q':
-                            type = Queen;
-                            side = White;
-                            break;
-                            
-                        case 'q':
-                            type = Queen;
-                            side = Black;
-                            break;
-                            
-                        case 'B':
-                            type = Bishop;
-                            side = White;
-                            break;
-                            
-                        case 'b':
-                            type = Bishop;
-                            side = Black;
-                            break;
-                            
-                        case 'R':
-                            type = Rook;
-                            side = White;
-                            break;
-                            
-                        case 'r':
-                            type = Rook;
-                            side = Black;
-                            break;
-                            
-                        case 'N':
-                            type = Knight;
-                            side = White;
-                            break;
-                            
-                        case 'n':
-                            type = Knight;
-                            side = Black;
-                            break;
-                            
-                        case 'P':
-                            type = Pawn;
-                            side = White;
-                            break;
-                            
-                        case 'p':
-                            type = Pawn;
-                            side = Black;
-                            break;
-                            
-                        default:
-                            std::cout << "Invalid piece type \"" << cmd.at(0) << std::endl;
-                            succeed = false;
-                            break;
-                    }
+                    succeed = Chess::ConvertCharToField(cmd.at(0), &type, &side);
                     
                     if (!succeed)
                     {
+                        std::cout << "Invalid piece type \"" << cmd.at(0) << std::endl;
                         continue;
                     }
                     

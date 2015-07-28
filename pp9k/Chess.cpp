@@ -52,3 +52,75 @@ int Chess::GetY()
 {
     return this->Y;
 }
+
+bool Chess::ConvertCharToField(char ch, ChessType* type, Color* side)
+{
+
+    switch (ch)
+    {
+        case 'K':
+            *type = King;
+            *side = White;
+            break;
+
+        case 'k':
+            *type = King;
+            *side = Black;
+            break;
+
+        case 'Q':
+            *type = Queen;
+            *side = White;
+            break;
+
+        case 'q':
+            *type = Queen;
+            *side = Black;
+            break;
+
+        case 'B':
+            *type = Bishop;
+            *side = White;
+            break;
+
+        case 'b':
+            *type = Bishop;
+            *side = Black;
+            break;
+
+        case 'R':
+            *type = Rook;
+            *side = White;
+            break;
+
+        case 'r':
+            *type = Rook;
+            *side = Black;
+            break;
+
+        case 'N':
+            *type = Knight;
+            *side = White;
+            break;
+
+        case 'n':
+            *type = Knight;
+            *side = Black;
+            break;
+
+        case 'P':
+            *type = Pawn;
+            *side = White;
+            break;
+
+        case 'p':
+            *type = Pawn;
+            *side = Black;
+            break;
+
+        default:
+            return false;
+    }
+
+    return true;
+}

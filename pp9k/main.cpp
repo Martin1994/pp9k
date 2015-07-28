@@ -20,6 +20,7 @@
 #endif
 
 #include <string>
+#include <fstream>
 
 #include "Game.h"
 #include "Controller.h"
@@ -31,12 +32,27 @@
 
 int main(int argc, const char * argv[])
 {
+    bool graphics = true;
+    bool board_print = true;
+    std::ifstream* is = NULL;
     for (int i = 1; i < argc; i++)
     {
-        std::string cmd(argv[i]);
-        if (cmd.at(0) == '-' && cmd.at(1) == '-')
+        if (argv[i][0] == '-' && argv[i][1] == '-')
         {
-            
+            std::string cmd(argv[i] + 2);
+            if (cmd == "nographics")
+                graphics = false;
+            else if (cmd == "nocliboard")
+                board_print = false;
+        }
+        else
+        {
+            is = new std::ifstream(argv[i]);
+            if (!is->is_open())
+            {
+                delete is;
+                is = NULL;
+            }
         }
     }
 
@@ -45,12 +61,18 @@ int main(int argc, const char * argv[])
     #if defined(_MSC_VER)
     pp9k::View* view = new pp9k::ViewCLI();
     #else
-    pp9k::View* view = new pp9k::ViewGUI();
+    pp9k::View* view = graphics ? new pp9k::ViewGUI(board_print) : new pp9k::ViewCLI();
     #endif
     
     game->SetView(view);
     view->SetController(controller);
     controller->SetGame(game);
+
+    if (is != NULL)
+    {
+        controller->LoadBoard(is);
+        delete is;
+    }
     
     view->GetCommand();
 

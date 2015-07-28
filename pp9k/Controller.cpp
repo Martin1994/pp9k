@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Martin Chloride. All rights reserved.
 //
 
+#include <string>
+#include <sstream>
+
 #include "Controller.h"
 #include "ChessKing.h"
 #include "ChessQueen.h"
@@ -151,4 +154,53 @@ bool Controller::Exit()
 {
     this->Game->Exit();
     return true;
+}
+
+void Controller::LoadBoard(std::istream* is)
+{
+    if (is == NULL || this->Game->CurrentBoard != NULL)
+        return;
+
+    this->InitializeGame();
+
+    int x = 0;
+    int y = pp9k::BoardSize - 1;
+    while (!is->eof() && y >= 0)
+    {
+        x = 0;
+        std::string line;
+        std::getline(*is, line);
+        std::stringstream ss(line);
+        while (!ss.eof() && x < pp9k::BoardSize)
+        {
+            char ch;
+            ss >> ch;
+            ChessType type;
+            Color side;
+            if (ch == '_')
+            {
+                this->Setup(x, y, Blank, White);
+            }
+            else
+            {
+                Chess::ConvertCharToField(ch, &type, &side);
+                this->Setup(x, y, type, side);
+            }
+            x += 1;
+        }
+
+        y -= 1;
+
+        if (y < 0)
+        {
+            char first;
+            (*is) >> first;
+            if (!is->fail())
+            {
+                this->SetTurn(first == 'W' ? White : Black);
+            }
+        }
+    }
+
+    this->InitializeComplete();
 }
