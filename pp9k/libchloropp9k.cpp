@@ -9,7 +9,7 @@
 #if defined(_MSC_VER)
 //  Microsoft 
 #define EXPORT __declspec(dllexport)
-#elif defined(_GCC)
+#elif defined(__GNUG__)
 //  GCC
 #define EXPORT __attribute__((__visibility__("default")))
 #else
