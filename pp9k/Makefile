@@ -4,7 +4,7 @@ pp9k: main.cpp Game.o Controller.o Xwindow.o View.o ViewCLI.o ViewGUI.o Player.o
 	g++ $(FLAG) -o pp9k main.cpp Game.o Controller.o Xwindow.o View.o ViewCLI.o ViewGUI.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o -lX11
 
 libchloropp9k.so: libchloropp9k.cpp Game.o Controller.o View.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
-	g++ $(FLAG) -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
+	g++ $(FLAG) -shared -o libchloropp9k.so libchloropp9k.cpp Game.o Controller.o View.o ViewWrapper.o Player.o PlayerHuman.o PlayerAI.o PlayerAI1.o PlayerAI2.o PlayerAI3.o PlayerAI4.o Board.o BoardHistory.o Move.o Chess.o ChessKing.o ChessQueen.o ChessBishop.o ChessRook.o ChessKnight.o ChessPawn.o
 
 Game.o: Game.cpp Game.h
 	g++ $(FLAG) -c -o Game.o Game.cpp

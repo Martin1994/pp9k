@@ -8,6 +8,7 @@
 
   "dependencies": {
     "Kestrel": "1.0.0-beta5",
+	  "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5"
   },
 
@@ -20,7 +21,6 @@
   "frameworks": {
     "dnx451": {
 	  "dependencies": {
-	    "Microsoft.AspNet.Server.IIS": "1.0.0-beta5"
       }
 	},
     "dnxcore50": {
