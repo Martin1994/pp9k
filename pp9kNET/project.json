@@ -8,23 +8,24 @@
 
   "dependencies": {
     "Kestrel": "1.0.0-beta5",
-	  "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
     "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5"
   },
 
   "commands": {
     "test": "pp9kNET",
-    "web": "Microsoft.AspNet.Hosting --config hosting.ini",
+    "web": "Microsoft.AspNet.Hosting --server=Microsoft.AspNet.Server.WebListener --server.urls=http://localhost:5000",
     "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5001"
   },
 
   "frameworks": {
     "dnx451": {
-	  "dependencies": {
+	    "dependencies": {
+	      "Microsoft.AspNet.Server.IIS": "1.0.0-beta5"
       }
-	},
+	  },
     "dnxcore50": {
       "dependencies": {
+	      "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
         "Microsoft.CSharp": "4.0.0-beta-22816",
         "System.Collections": "4.0.10-beta-22231",
         "System.Console": "4.0.0-beta-22816",
