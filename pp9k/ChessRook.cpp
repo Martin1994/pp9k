@@ -27,15 +27,15 @@ ChessRook::ChessRook(pp9k::Player* player, int x, int y, bool moved) : Chess(pla
     this->Moved = moved;
 }
 
-void ChessRook::GetAvailableMoves(Board* board, Moves* moves)
+void ChessRook::GetAvailableMoves(Board* board, Moves* moves, bool only_capture)
 {
-    this->AddMove(board, moves,  1,  0);
-    this->AddMove(board, moves,  0,  1);
-    this->AddMove(board, moves, -1,  0);
-    this->AddMove(board, moves,  0, -1);
+    this->AddMove(board, moves,  1,  0, only_capture);
+    this->AddMove(board, moves,  0,  1, only_capture);
+    this->AddMove(board, moves, -1,  0, only_capture);
+    this->AddMove(board, moves,  0, -1, only_capture);
 }
 
-void ChessRook::AddMove(Board* board, Moves* moves, int direction_x, int direction_y)
+void ChessRook::AddMove(Board* board, Moves* moves, int direction_x, int direction_y, bool only_capture)
 {
     
     int new_x;
@@ -56,9 +56,12 @@ void ChessRook::AddMove(Board* board, Moves* moves, int direction_x, int directi
          captured == NULL
          )
     {
-        before = this->Clone();
-        after = new ChessRook(this->GetPlayer(), new_x, new_y, true);
-        moves->AddMove(new Move(before, after));
+        if (!only_capture)
+        {
+            before = this->Clone();
+            after = new ChessRook(this->GetPlayer(), new_x, new_y, true);
+            moves->AddMove(new Move(before, after));
+        }
     }
     if (new_x >= 0 && new_x < pp9k::BoardSize &&
         new_y >= 0 && new_y < pp9k::BoardSize &&

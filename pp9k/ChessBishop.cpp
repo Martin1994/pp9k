@@ -15,16 +15,16 @@ ChessBishop::ChessBishop(pp9k::Player* player, int x, int y) : Chess(player, x, 
     
 }
 
-void ChessBishop::GetAvailableMoves(Board* board, Moves* moves)
+void ChessBishop::GetAvailableMoves(Board* board, Moves* moves, bool only_capture)
 {
     
-    this->AddMove(board, moves,  1,  1);
-    this->AddMove(board, moves, -1,  1);
-    this->AddMove(board, moves,  1, -1);
-    this->AddMove(board, moves, -1, -1);
+    this->AddMove(board, moves,  1,  1, only_capture);
+    this->AddMove(board, moves, -1,  1, only_capture);
+    this->AddMove(board, moves,  1, -1, only_capture);
+    this->AddMove(board, moves, -1, -1, only_capture);
 }
 
-void ChessBishop::AddMove(Board* board, Moves* moves, int direction_x, int direction_y)
+void ChessBishop::AddMove(Board* board, Moves* moves, int direction_x, int direction_y, bool only_capture)
 {
     int new_x;
     int new_y;
@@ -44,11 +44,16 @@ void ChessBishop::AddMove(Board* board, Moves* moves, int direction_x, int direc
          captured == NULL
          )
     {
-        before = this->Clone();
-        after = new ChessBishop(this->GetPlayer(), new_x, new_y);
-        moves->AddMove(new Move(before, after));
+        if (!only_capture)
+        {
+            before = this->Clone();
+            after = new ChessBishop(this->GetPlayer(), new_x, new_y);
+            moves->AddMove(new Move(before, after));
+        }
     }
-    if (captured != NULL && captured->GetPlayer() != this->GetPlayer())
+    if (new_x >= 0 && new_x < pp9k::BoardSize &&
+        new_y >= 0 && new_y < pp9k::BoardSize &&
+        captured != NULL && captured->GetPlayer() != this->GetPlayer())
     {
         before = this->Clone();
         after = new ChessBishop(this->GetPlayer(), new_x, new_y);

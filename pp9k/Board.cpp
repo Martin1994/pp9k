@@ -211,11 +211,11 @@ bool Board::IsCheck(Color side)
 {
     Moves* moves = new Moves();
     
-    int j =0;
+    int j = 0;
     for (int i = 0; i < BoardSize * BoardSize; i++)
     {
         if (this->Chesses[i] != NULL && this->Chesses[i]->GetPlayer()->GetSide() == side)
-            this->Chesses[i]->GetAvailableMoves(this, moves);
+            this->Chesses[i]->GetAvailableMoves(this, moves, true);
         for (; j < moves->GetLength(); j++)
         {
             Move* move = moves->GetMove(j);

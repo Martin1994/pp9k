@@ -19,11 +19,11 @@ namespace pp9k
     {
         
     private:
-        void AddMove(Board* board, Moves* moves, int direction_x, int direction_y);
+        void AddMove(Board* board, Moves* moves, int direction_x, int direction_y, bool only_capture);
         
     public:
         ChessQueen(pp9k::Player* player, int x, int y);
-        void GetAvailableMoves(Board* board, Moves* moves);
+        void GetAvailableMoves(Board* board, Moves* moves, bool only_capture);
         ChessType GetChessType();
         Chess* Clone();
         

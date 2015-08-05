@@ -28,20 +28,20 @@ ChessKing::ChessKing(pp9k::Player* player, int x, int y, bool moved) : Chess(pla
     this->Moved = moved;
 }
 
-void ChessKing::GetAvailableMoves(Board* board, Moves* moves)
+void ChessKing::GetAvailableMoves(Board* board, Moves* moves, bool only_capture)
 {
     // Regular move and capture
-    this->AddMove(board, moves,  1,  0);
-    this->AddMove(board, moves, -1,  0);
-    this->AddMove(board, moves,  0,  1);
-    this->AddMove(board, moves,  0, -1);
-    this->AddMove(board, moves, 1, 1);
-    this->AddMove(board, moves, 1, -1);
-    this->AddMove(board, moves, -1, 1);
-    this->AddMove(board, moves, -1, -1);
+    this->AddMove(board, moves,  1,  0, only_capture);
+    this->AddMove(board, moves, -1,  0, only_capture);
+    this->AddMove(board, moves,  0,  1, only_capture);
+    this->AddMove(board, moves,  0, -1, only_capture);
+    this->AddMove(board, moves,  1,  1, only_capture);
+    this->AddMove(board, moves,  1, -1, only_capture);
+    this->AddMove(board, moves, -1,  1, only_capture);
+    this->AddMove(board, moves, -1, -1, only_capture);
     
     // Castling
-    if (!this->Moved)
+    if (!only_capture && !this->Moved && !board->IsCheck(this->GetPlayer()->GetSide() == White ? Black : White))
     {
         int x;
         int y = this->GetY();
@@ -125,17 +125,17 @@ Chess* ChessKing::Clone()
     return new ChessKing(this->GetPlayer(), this->GetX(), this->GetY(), this->Moved);
 }
 
-void ChessKing::AddMove(Board* board, Moves* moves, int relative_x, int relative_y)
+void ChessKing::AddMove(Board* board, Moves* moves, int relative_x, int relative_y, bool only_capture)
 {
     int new_x = this->GetX() + relative_x;
     int new_y = this->GetY() + relative_y;
-    
+
     if (new_x < 0 || new_x >= pp9k::BoardSize || new_y < 0 || new_y >= pp9k::BoardSize)
     {
         return;
     }
     Chess* captured = board->GetChess(new_x, new_y);
-    
+
     if (captured != NULL)
     {
         if (captured->GetPlayer() == this->GetPlayer())
@@ -143,6 +143,10 @@ void ChessKing::AddMove(Board* board, Moves* moves, int relative_x, int relative
             return;
         }
         captured = captured->Clone();
+    }
+    else if (only_capture)
+    {
+        return;
     }
 
     Chess* before = this->Clone();

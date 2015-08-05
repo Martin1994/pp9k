@@ -18,11 +18,11 @@ namespace pp9k
     class ChessKnight : public Chess
     {
     private:
-        void AddMove(Board* board, Moves* moves, int relative_x, int relative_y);
+        void AddMove(Board* board, Moves* moves, int relative_x, int relative_y, bool only_capture);
         
     public:
         ChessKnight(pp9k::Player* player, int x, int y);
-        void GetAvailableMoves(Board* board, Moves* moves);
+        void GetAvailableMoves(Board* board, Moves* moves, bool only_capture);
         ChessType GetChessType();
         Chess* Clone();
         

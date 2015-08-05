@@ -15,16 +15,16 @@ ChessKnight::ChessKnight(pp9k::Player* player, int x, int y) : Chess(player, x, 
     
 }
 
-void ChessKnight::GetAvailableMoves(Board* board, Moves* moves)
+void ChessKnight::GetAvailableMoves(Board* board, Moves* moves, bool only_capture)
 {
-    this->AddMove(board, moves,  1,  2);
-    this->AddMove(board, moves, -1,  2);
-    this->AddMove(board, moves,  1, -2);
-    this->AddMove(board, moves, -1, -2);
-    this->AddMove(board, moves,  2,  1);
-    this->AddMove(board, moves, -2,  1);
-    this->AddMove(board, moves,  2, -1);
-    this->AddMove(board, moves, -2, -1);
+    this->AddMove(board, moves,  1,  2, only_capture);
+    this->AddMove(board, moves, -1,  2, only_capture);
+    this->AddMove(board, moves,  1, -2, only_capture);
+    this->AddMove(board, moves, -1, -2, only_capture);
+    this->AddMove(board, moves,  2,  1, only_capture);
+    this->AddMove(board, moves, -2,  1, only_capture);
+    this->AddMove(board, moves,  2, -1, only_capture);
+    this->AddMove(board, moves, -2, -1, only_capture);
 }
 
 ChessType ChessKnight::GetChessType()
@@ -32,7 +32,7 @@ ChessType ChessKnight::GetChessType()
     return Knight;
 }
 
-void ChessKnight::AddMove(Board* board, Moves* moves, int relative_x, int relative_y)
+void ChessKnight::AddMove(Board* board, Moves* moves, int relative_x, int relative_y, bool only_capture)
 {
     int new_x = this->GetX() + relative_x;
     int new_y = this->GetY() + relative_y;
@@ -57,6 +57,10 @@ void ChessKnight::AddMove(Board* board, Moves* moves, int relative_x, int relati
             return;
         }
         captured = captured->Clone();
+    }
+    else if (only_capture)
+    {
+        return;
     }
     
     before = this->Clone();

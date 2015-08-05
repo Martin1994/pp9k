@@ -42,7 +42,7 @@ namespace pp9k
          * Note: this method won't check if this move will make one's own king being checked.
          */
         Moves* GetAvailableMoves(Board* board);
-        virtual void GetAvailableMoves(Board* board, Moves* moves) = 0;
+        virtual void GetAvailableMoves(Board* board, Moves* moves, bool only_capture = false) = 0;
         
         int GetX();
         int GetY();

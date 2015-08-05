@@ -25,9 +25,9 @@ namespace pp9k
     public:
         ChessPawn(pp9k::Player* player, int x, int y);
         ChessPawn(pp9k::Player* player, int x, int y, bool moved, bool moved_twice);
-        virtual void GetAvailableMoves(Board* board, Moves* moves);
-        virtual ChessType GetChessType();
-        virtual Chess* Clone();
+        void GetAvailableMoves(Board* board, Moves* moves, bool only_capture);
+        ChessType GetChessType();
+        Chess* Clone();
         
     };
 }

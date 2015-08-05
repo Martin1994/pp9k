@@ -20,12 +20,12 @@ namespace pp9k
         
     private:
         bool Moved;
-        void AddMove(Board* board, Moves* moves, int relative_x, int relative_y);
+        void AddMove(Board* board, Moves* moves, int relative_x, int relative_y, bool only_capture);
         
     public:
         ChessKing(pp9k::Player* player, int x, int y);
         ChessKing(pp9k::Player* player, int x, int y, bool moved);
-        void GetAvailableMoves(Board* board, Moves* moves);
+        void GetAvailableMoves(Board* board, Moves* moves, bool only_capture);
         ChessType GetChessType();
         Chess* Clone();
         

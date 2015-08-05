@@ -32,7 +32,7 @@ ChessPawn::ChessPawn(pp9k::Player* player, int x, int y, bool moved, bool moved_
     this->MovedTwice = moved_twice;
 }
 
-void ChessPawn::GetAvailableMoves(Board* board, Moves* moves)
+void ChessPawn::GetAvailableMoves(Board* board, Moves* moves, bool only_capture)
 {
     Move* move;
     Chess* after;
@@ -55,38 +55,41 @@ void ChessPawn::GetAvailableMoves(Board* board, Moves* moves)
     new_y = this->GetY() + direction;
     new_x = this->GetX();
     
-    // Blocked?
-    if (board->GetChess(new_x, new_y) == NULL)
+    if (!only_capture)
     {
-        if (new_y == pp9k::BoardSize - 1 || new_y == 0)
+        // Blocked?
+        if (board->GetChess(new_x, new_y) == NULL)
         {
-            // Promotion
-            after = new ChessQueen(player, new_x, new_y);
-            move = new Move(this->Clone(), after);
-            moves->AddMove(move);
-            after = new ChessKnight(player, new_x, new_y);
-            move = new Move(this->Clone(), after);
-            moves->AddMove(move);
-            after = new ChessRook(player, new_x, new_y, true);
-            move = new Move(this->Clone(), after);
-            moves->AddMove(move);
-            after = new ChessBishop(player, new_x, new_y);
-            move = new Move(this->Clone(), after);
-            moves->AddMove(move);
-        }
-        else
-        {
-            // Move
-            after = new ChessPawn(player, new_x, new_y, true, true);
-            move = new Move(this->Clone(), after);
-            moves->AddMove(move);
-            
-            // First move
-            if (this->Moved == false && board->GetChess(new_x, new_y + direction) == NULL)
+            if (new_y == pp9k::BoardSize - 1 || new_y == 0)
             {
-                after = new ChessPawn(player, new_x, new_y + direction, true, false);
+                // Promotion
+                after = new ChessQueen(player, new_x, new_y);
                 move = new Move(this->Clone(), after);
                 moves->AddMove(move);
+                after = new ChessKnight(player, new_x, new_y);
+                move = new Move(this->Clone(), after);
+                moves->AddMove(move);
+                after = new ChessRook(player, new_x, new_y, true);
+                move = new Move(this->Clone(), after);
+                moves->AddMove(move);
+                after = new ChessBishop(player, new_x, new_y);
+                move = new Move(this->Clone(), after);
+                moves->AddMove(move);
+            }
+            else
+            {
+                // Move
+                after = new ChessPawn(player, new_x, new_y, true, true);
+                move = new Move(this->Clone(), after);
+                moves->AddMove(move);
+
+                // First move
+                if (this->Moved == false && board->GetChess(new_x, new_y + direction) == NULL)
+                {
+                    after = new ChessPawn(player, new_x, new_y + direction, true, false);
+                    move = new Move(this->Clone(), after);
+                    moves->AddMove(move);
+                }
             }
         }
     }
