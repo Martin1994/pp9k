@@ -42,11 +42,11 @@ namespace pp9kNET
             }
         }
 
-        public bool MakeMove(int from_x, int from_y, int to_x, int to_y)
+        public bool MakeMove(int from_x, int from_y, int to_x, int to_y, Type prefer = Type.Queen)
         {
             lock (ConcurrentLock)
             {
-                return make_move(Wrapper, from_x, from_y, to_x, to_y);
+                return make_move(Wrapper, from_x, from_y, to_x, to_y, prefer.ToInt());
             }
         }
 
@@ -177,7 +177,7 @@ namespace pp9kNET
         private extern static void destroy_pp9k(IntPtr pp9k);
         
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
-        private extern static bool make_move(IntPtr pp9k, int from_x, int from_y, int to_x, int to_y);
+        private extern static bool make_move(IntPtr pp9k, int from_x, int from_y, int to_x, int to_y, int prefer);
         
         [DllImport(pp9kDllPath, CallingConvention = CallingConvention.Cdecl)]
         private extern static bool undo(IntPtr pp9k);

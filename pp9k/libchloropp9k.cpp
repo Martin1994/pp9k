@@ -11,7 +11,7 @@
 #define EXPORT __declspec(dllexport)
 #elif defined(_GCC)
 //  GCC
-#define EXPORT __attribute__((visibility("default")))
+#define EXPORT __attribute__((__visibility__("default")))
 #else
 //  do nothing and hope for the best?
 #define EXPORT
@@ -71,9 +71,9 @@ extern "C"
         delete (pp9k_wrapper*) wrapper;
     }
     
-    EXPORT bool make_move(void* wrapper, int original_x, int original_y, int target_x, int target_y)
+    EXPORT bool make_move(void* wrapper, int original_x, int original_y, int target_x, int target_y, int prefer)
     {
-        return ((pp9k_wrapper*) wrapper)->controller->MakeMove(original_x, original_y, target_x, target_y);
+        return ((pp9k_wrapper*) wrapper)->controller->MakeMove(original_x, original_y, target_x, target_y, static_cast<pp9k::ChessType>(prefer));
     }
     
     EXPORT bool undo(void* wrapper)

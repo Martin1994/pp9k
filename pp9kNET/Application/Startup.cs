@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Framework.DependencyInjection;
+using System.Text.RegularExpressions;
 
 using pp9kNET.Handlers;
-using System.Text.RegularExpressions;
 
 namespace pp9kNET
 {
@@ -46,7 +46,7 @@ namespace pp9kNET
         public void Configure(IApplicationBuilder app)
         {
             Application pp9k_app = new Application();
-
+            
             app.Run(async (context) =>
             {
                 IHttpHandler handler = null;
@@ -74,6 +74,8 @@ namespace pp9kNET
                 {
                     await _handlers["exception"](pp9k_app).Respond(context);
                     await context.Response.WriteAsync(ex.Message + "\n" + ex.StackTrace + "\n");
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.StackTrace);
                 }
             });
         }
