@@ -13,10 +13,14 @@ namespace pp9kNET
 
         protected Color _turn;
 
+        protected readonly string _id;
+
         public Color Turn { get { return _turn; } }
 
-        public PassiveGame() : base()
+        public PassiveGame(string id) : base()
         {
+            _id = id;
+
             for (int i = 0; i < BoardSize; i++)
             {
                 for (int j = 0; j < BoardSize; j++)
@@ -58,20 +62,6 @@ namespace pp9kNET
 
                 return String.Join(", ", piece_str);
             }
-        }
-    }
-
-    public class Piece
-    {
-        public Type Type { get { return _type; } }
-        public Color Side { get { return _side; } }
-        private Type _type;
-        private Color _side;
-
-        public Piece(Type type, Color side)
-        {
-            _type = type;
-            _side = side;
         }
     }
 }

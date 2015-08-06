@@ -79,21 +79,17 @@ function init_game_board(game_id) {
 
     $.post("command/refresh", { gameid: game_id }, respond_handler, "json");
 
-    $(".board .grid").click(function ()
+    $(".board .grid").click(function (e)
     {
-        if ($(this).find("img").length > 0)
-        {
+        if ($(this).find("img").length > 0) {
             // Valid piece
-            if ($(".board .grid.blink").length > 0)
-            {
+            if ($(".board .grid.blink").length > 0) {
                 // Already selected some piece.
-                if ($(".board .grid.blink")[0] == $(this)[0])
-                {
+                if ($(".board .grid.blink")[0] == $(this)[0]) {
                     // Same piece. Cancel it.
                     $(this).removeClass("blink");
                 }
-                else
-                {
+                else {
                     // Different piece. Make move.
                     var from = $(".board .grid.blink");
                     var to = $(this);
@@ -101,17 +97,14 @@ function init_game_board(game_id) {
                     $.post("command/move", { "gameid": game_id, "from-x": from.attr("x"), "from-y": from.attr("y"), "to-x": to.attr("x"), "to-y": to.attr("y") }, respond_handler, "json");
                 }
             }
-            else
-            {
+            else {
                 // Haven't selected any piece.
                 $(this).addClass("blink");
             }
         }
-        else
-        {
+        else {
             // Blank
-            if ($(".board .grid.blink").length > 0)
-            {
+            if ($(".board .grid.blink").length > 0) {
                 // Already selected some piece. Make move.
                 var from = $(".board .grid.blink");
                 var to = $(this);
@@ -120,6 +113,15 @@ function init_game_board(game_id) {
             }
         }
     });
+
+    window.addEventListener("message", function (e) {
+        eval("respond_handler(" + e.data + ");");
+    });
+
+    $.post("token", { gameid: game_id }, function (respond)
+    {
+        $("iframe.comet").attr("src", "http://" + window.location.hostname + ":86/CDPortal.php?token=" + respond.token);
+    }, "json");
 }
 
 $(document).ready(function ()

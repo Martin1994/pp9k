@@ -8,7 +8,9 @@
 
   "dependencies": {
     "Kestrel": "1.0.0-beta5",
-    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5"
+    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
+    "System.Net.Http": "4.0.0",
+    "Newtonsoft.Json": "6.0.6"
   },
 
   "commands": {
@@ -19,13 +21,13 @@
 
   "frameworks": {
     "dnx451": {
-	    "dependencies": {
-	      "Microsoft.AspNet.Server.IIS": "1.0.0-beta5"
+      "dependencies": {
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5"
       }
-	  },
+    },
     "dnxcore50": {
       "dependencies": {
-	      "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
+        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
         "Microsoft.CSharp": "4.0.0-beta-22816",
         "System.Collections": "4.0.10-beta-22231",
         "System.Console": "4.0.0-beta-22816",

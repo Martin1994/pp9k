@@ -29,7 +29,7 @@ namespace pp9kNET.Handlers
             }
 
             string gameid = context.Request.Form["gameid"];
-            PassiveGame pp9k = _app.GetGame(gameid);
+            PassiveGame pp9k = (PassiveGame)_app.GetGame(gameid);
 
             if (pp9k == null)
             {
@@ -93,14 +93,14 @@ namespace pp9kNET.Handlers
                     {
                         return;
                     }
-
+                    /*
                     actions = new List<string>()
                     {
                         "{\"action\": \"update-board\", \"param\": [" + pp9k.BoardJson + "]}",
                         "{\"action\": \"update-turn\", \"param\": \"" + pp9k.Turn.ToString() + "\"}"
                     };
                     await context.Response.WriteAsync(SuccessJson(actions));
-
+                    */
                     return;
 
                 default:

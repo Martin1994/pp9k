@@ -164,3 +164,8 @@
     font-weight: bold;
     line-height: 50px;
 }
+
+#game-page iframe.comet
+{
+    display: none;
+}

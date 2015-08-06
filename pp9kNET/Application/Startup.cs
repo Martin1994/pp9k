@@ -37,6 +37,7 @@ namespace pp9kNET
             { "^/$" , WelcomeHandler.Create },
             { "^/newgame$" , NewGameHandler.Create },
             { "^/game$" , GameHandler.Create },
+            { "^/token$" , TokenHandler.Create },
             { "^/command/(.*)$" , CommandHandler.Create("^/command/(.*)$") },
             { "^/static/(.*)$" , StaticHandler.Create("^/static/(.*)$", "./Static/{1}", _content_types) },
             { "default" , ErrorHandler.Create(404) },
