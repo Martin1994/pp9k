@@ -70,9 +70,9 @@ namespace pp9kNET
             };
         }
 
-        protected void OnBoardChangedComet(int x, int y, Type type, Color side)
+        protected async void OnBoardChangedComet(int x, int y, Type type, Color side)
         {
-            SendMessage(
+            await SendMessage(
                 "{\"success\": true, \"actions\": [" +
                     "{\"action\": \"update-board\", \"param\":" +
                         String.Format("[{{\"type\": \"{0}\", \"side\": \"{1}\", \"x\": {2}, \"y\": {3}}}]", type.ToString(), side.ToString(), x, y) +
@@ -80,15 +80,15 @@ namespace pp9kNET
                 "]}");
         }
 
-        protected void OnTurnChangedComet(Color side)
+        protected async void OnTurnChangedComet(Color side)
         {
-            SendMessage(
+            await SendMessage(
                 "{\"success\": true, \"actions\": [" +
                     "{\"action\": \"update-turn\", \"param\": \"" + side.ToString() + "\"}" +
                 "]}");
         }
 
-        protected void SendMessage(string message)
+        protected async Task SendMessage(string message)
         {
             using (var client = new HttpClient())
             {
@@ -102,9 +102,9 @@ namespace pp9kNET
 
                 FormUrlEncodedContent content = new FormUrlEncodedContent(values);
 
-                HttpResponseMessage response = client.PostAsync("http://127.0.0.1:86/api/send", content).Result;
+                HttpResponseMessage response = await client.PostAsync("http://127.0.0.1:86/api/send", content);
 
-                string responseString = response.Content.ReadAsStringAsync().Result;
+                string responseString = await response.Content.ReadAsStringAsync();
 
                 JObject responseJson = JObject.Parse(responseString);
 
