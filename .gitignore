@@ -1,8 +1,7 @@
 *.dll
-pp9kNET/project.lock.json
-pp9kNET/Library/*.*
-!pp9kNET/Library/*.cs
+project.lock.json
 *.pdb
+*.VC.*
 .fuse_hidden*
 *.plist
 *.o
@@ -10,3 +9,9 @@ pp9kNET/Library/*.*
 *.xproj.user
 Properties/*
 Properties
+*.user
+.vs
+bin
+obj
+ipch
+Debug

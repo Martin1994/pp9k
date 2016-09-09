@@ -1,40 +1,68 @@
 {
+  "title": "pp9k.NET",
   "version": "1.0.0-*",
-  "description": "ASP.NET interface of chloropp9k",
+  "description": "ASP.NET Core interface of chloropp9k",
   "authors": [ "Martin Chloride" ],
-  "tags": [ "Chess" ],
-  "projectUrl": "https://github.com/Martin1994/pp9k/",
-  "licenseUrl": "",
-
-  "dependencies": {
-    "Kestrel": "1.0.0-beta5",
-    "Microsoft.AspNet.Server.WebListener": "1.0.0-beta5",
-    "System.Net.Http": "4.0.0",
-    "Newtonsoft.Json": "6.0.6"
+  "packOptions": {
+    "licenseUrl": "",
+    "projectUrl": "https://github.com/Martin1994/pp9k/",
+    "tags": [ "Chess" ]
   },
 
-  "commands": {
-    "test": "pp9kNET",
-    "web": "Microsoft.AspNet.Hosting --server=Microsoft.AspNet.Server.WebListener --server.urls=http://localhost:5000",
-    "kestrel": "Microsoft.AspNet.Hosting --server Kestrel --server.urls http://localhost:5001"
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "copyToOutput": "lib/*"
+    //"optimize": true
+  },
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
+    "Microsoft.AspNetCore.Routing": "1.0.0",
+    "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
+    "Microsoft.AspNetCore.Server.Kestrel": "1.0.0",
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Microsoft.AspNetCore.WebSockets.Server": "0.1.0",
+    "Microsoft.Extensions.Logging.Console": "1.0.0",
+    "Microsoft.NETCore.App": {
+      "version": "1.0.0",
+      "type": "platform"
+    },
+    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+    "Newtonsoft.Json": "6.0.6",
+    "System.Net.Http": "4.1.0",
+    "System.Runtime.Serialization.Primitives": "4.1.1"
   },
 
   "frameworks": {
-    "dnx451": {
-      "dependencies": {
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5"
-      }
-    },
-    "dnxcore50": {
-      "dependencies": {
-        "Microsoft.AspNet.Server.IIS": "1.0.0-beta5",
-        "Microsoft.CSharp": "4.0.0-beta-22816",
-        "System.Collections": "4.0.10-beta-22231",
-        "System.Console": "4.0.0-beta-22816",
-        "System.Linq": "4.0.0-beta-22816",
-        "System.Runtime": "4.0.20-beta-22816",
-        "System.Runtime.InteropServices": "4.0.20-beta-22816"
-      }
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "portable-net45+win8"
+      ]
     }
+  },
+
+  "tools": {
+    "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
+  },
+
+  "commands": {
+    "kestrel": "Program"
+  },
+
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
+    }
+  },
+
+  "publishOptions": {
+    "include": [
+      "lib"
+    ]
+  },
+
+  "scripts": {
+    "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
