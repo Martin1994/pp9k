@@ -50,10 +50,10 @@ namespace pp9kNET
 
             app.Run(async ctx =>
             {
-                //HttpHandler handler = new HttpHandler();
-                //await handler.CodeRespond(ctx, 404);
-                ctx.Response.StatusCode = 404;
-                await ctx.Response.WriteAsync(ctx.Request.Path + " not found.");
+                HttpHandler handler = new HttpHandler();
+                await handler.CodeRespond(ctx, 404);
+                //ctx.Response.StatusCode = 404;
+                //await ctx.Response.WriteAsync(ctx.Request.Path + " not found.");
             });
         }
     }

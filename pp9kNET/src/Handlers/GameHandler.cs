@@ -16,6 +16,11 @@ namespace pp9kNET.Handlers
 {
     public class GameHandler : Pp9kHandler
     {
+        /// <summary>
+        /// Get the game info of a game
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         protected override async Task Get(HttpContext context)
         {
             _app = GetApp(context);
@@ -39,18 +44,17 @@ namespace pp9kNET.Handlers
                 {
                     context.Response.StatusCode = 400;
                     await context.Response.WriteJsonAsync(new JObject()
-                {
-                    { "message", "Game doesn't exist." },
-                    { "gameid", gameid }
-                });
+                    {
+                        { "message", "Game doesn't exist." },
+                        { "gameid", gameid }
+                    });
                     return;
                 }
-
+                
                 if (context.WebSockets.IsWebSocketRequest)
                 {
                     WebSocket ws = await context.WebSockets.AcceptWebSocketAsync();
                     WebSocketClient client = new WebSocketClient(ws);
-                    client.Listen(); // Intentionally calling without await
                     client.OnMessage += async (args) =>
                     {
                         JObject operation;
@@ -66,14 +70,44 @@ namespace pp9kNET.Handlers
                             }.ToString(Formatting.None));
                             return;
                         }
-                        JObject result = game.Operate(operation);
+                        JObject result;
+                        try
+                        {
+                            result = game.Operate(operation, client);
+                        }
+                        catch (Exception)
+                        {
+                            result = new JObject()
+                            {
+                                { "error", "Internal server error." }
+                            };
+                        }
                         await client.Send(result.ToString(Formatting.None));
                     };
                     game.AddClient(client);
+                    await client.Listen();
+                }
+                else
+                {
+                    await context.Response.WriteJsonAsync(game.Description);
                 }
             }
         }
 
+        /// <summary>
+        /// Create a new game
+        /// </summary>
+        /// <param name="context">
+        /// Input:
+        /// black - type of black player
+        /// name - name of the game
+        /// password - password of the game
+        /// white - type of white player
+        /// 
+        /// Output:
+        /// Game description. See Pp9kGame.
+        /// </param>
+        /// <returns></returns>
         protected override async Task Post(HttpContext context)
         {
             _app = GetApp(context);
@@ -157,7 +191,20 @@ namespace pp9kNET.Handlers
                 });
                 return;
             }
-            
+
+            // Get name
+            string name;
+            StringValues nameValue;
+            if (context.Request.Form.TryGetValue("name", out nameValue) && nameValue != "")
+            {
+                name = nameValue;
+            }
+            else
+            {
+                name = "Game " + game.Id;
+            }
+            game.Name = name;
+
             await context.Response.WriteJsonAsync(game.Description);
         }
 
@@ -242,7 +289,22 @@ namespace pp9kNET.Handlers
                 return;
             }
 
-            JObject result = game.Operate(operation);
+            JObject result;
+            try
+            {
+                result = game.Operate(operation, null);
+            }
+            catch (Exception)
+            {
+                await CodeRespond(context, 500);
+                return;
+            }
+
+            JToken error;
+            if (result.TryGetValue("error", out error))
+            {
+                context.Response.StatusCode = 400;
+            }
 
             await context.Response.WriteJsonAsync(result);
         }

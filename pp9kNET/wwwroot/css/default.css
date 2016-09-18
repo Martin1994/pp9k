@@ -35,6 +35,14 @@
     background: #333;
 }
 
+#back-button
+{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 20px;
+}
+
 .page
 {
     display: none;
@@ -48,31 +56,15 @@
 
 #hall-page .welcome
 {
-    margin: 100px auto 0;
+    margin: 75px auto 0;
 }
 
-#hall-page .new-game-div,
-#hall-page .join-game-div
+#hall-page button.disabled
 {
-    display: inline-block;
-    width: 50%;
-    margin: 0;
-    padding: 0;
-    border-width: 0;
+    background: #777;
 }
 
-#hall-page .new-game-div
-{
-    text-align: right;
-}
-
-#hall-page .join-game-div
-{
-    text-align: left;
-}
-
-#hall-page .new-game-div button,
-#hall-page .join-game-div button
+#hall-page button
 {
     font-size: 18px;
     color: #ccc;
@@ -87,7 +79,27 @@
     padding: 5px 10px;
 }
 
-#game-page .title
+#hall-page .game-options
+{
+    background: #eee;
+    display: none;
+    padding: 50px 0 0 0;
+}
+
+#hall-page .option .key
+{
+    display: inline-block;
+    text-align: right;
+}
+
+#hall-page .option .key,
+#hall-page .option .value
+{
+    margin: 10px 30px;
+    width: 225px;
+}
+
+#game-page #game-title
 {
     font-size: 24px;
     margin: 40px 0 0;

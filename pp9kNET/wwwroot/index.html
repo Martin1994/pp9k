@@ -2,32 +2,92 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>ChloroPawnPusher9000NET</title>
+        <title>ChloroPP9K.NET</title>
         <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
         <link rel="stylesheet" href="css/default.css" />
         <script src="js/jquery-2.1.4.min.js"></script>
         <script src="js/main.js"></script>
         <script src="js/hall.js"></script>
+        <script src="js/game.js"></script>
     </head>
     <body>
         <div id="header">
-            ChloroPawnPusher9000NET Online Chess Arena
+            <div id="back-button"><a>&lt; Back</a></div>
+            ChloroPP9K.NET Online Chess Arena
         </div>
 
         <div id="hall-page" class="page">
             <div class="welcome">
-                Welcome to ChloroPawnPusher9000 online chess arena!<br />
+                Welcome to ChloroPawnPusher9000.NET online chess arena!<br />
                 You can start a new game or join an ongoing game.
             </div>
-            <div class="new-game-div">
-                <button>New game</button>
-            </div><div class="join-game-div">
-                <button>Join game</button>
+            <div class="buttons">
+                <button id="new-game-button">New game</button>
+                <button id="join-game-button">Join game</button>
+            </div>
+
+            <div id="new-game-options" class="game-options">
+                <div class="option">
+                    <span class="key">Game name</span>
+                    <input class="value" id="game-name" type="text" />
+                </div>
+                <div class="option">
+                    <span class="key">Password</span>
+                    <input class="value" id="game-password" type="password" />
+                </div>
+                <div class="option">
+                    <span class="key">Play as*</span>
+                    <select class="value" id="play-as">
+                        <option value="white" selected>White Player</option>
+                        <option value="black">Black Player</option>
+                        <option value="observer">Observer</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <span class="key">White player*</span>
+                    <select class="value" id="player-type-white">
+                        <option value="human">Player</option>
+                        <option value="computer1" disabled>AI Level 1</option>
+                        <option value="computer2" disabled>AI Level 2</option>
+                        <option value="computer3" disabled>AI Level 3</option>
+                        <option value="computer4" disabled>AI Level 4</option>
+                    </select>
+                </div>
+                <div class="option">
+                    <span class="key">Black player*</span>
+                    <select class="value" id="player-type-black">
+                        <option value="human">Player</option>
+                        <option value="computer1" disabled>AI Level 1</option>
+                        <option value="computer2" disabled>AI Level 2</option>
+                        <option value="computer3" disabled>AI Level 3</option>
+                        <option value="computer4" disabled>AI Level 4</option>
+                    </select>
+                </div>
+                <button id="new-game-confirm">Submit</button>
+            </div>
+            <div id="join-game-options" class="game-options">
+                <div class="option">
+                    <span class="key">Game id (6 characters)*</span>
+                    <input class="value" id="gameid" type="text" />
+                </div>
+                <div class="option">
+                    <span class="key">Join as*</span>
+                    <select class="value" id="join-as">
+                        <option value="white">White Player</option>
+                        <option value="black">Black Player</option>
+                        <option value="observer"selected>Observer</option>
+                    </select>
+                </div>
+                <div class="option" id="join-game-password-option">
+                    <span class="key">Password</span>
+                    <input class="value" id="join-game-password" type="password" />
+                </div>
+                <button id="join-game-confirm">Submit</button>
             </div>
         </div>
 
         <div id="game-page" class="page">
-            <div class="title">Game Lobby <span class="gameid"></span></div>
+            <div id="game-title"></div>
             <div class="board">
                 <div class="grid black" y=7 x=0></div>
                 <div class="grid white" y=7 x=1></div>
@@ -98,7 +158,7 @@
         </div>
 
         <div id="footer">
-            Copyright 2015-2016 Martin Chloride | Powered by <a href="https://github.com/Martin1994/pp9k">libchloropp9k</a>
+            Copyright 2015-2016 <a href="http://martincl2.me">Martin Chloride</a> | Powered by <a href="https://github.com/Martin1994/pp9k">libchloropp9k</a>
         </div>
     </body>
 </html>

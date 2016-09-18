@@ -12,6 +12,7 @@ namespace MartinCl2.IO
     {
         private readonly WebSocket _websocket;
         private WebSocketMessageType _messageType = WebSocketMessageType.Text;
+        private byte[] _pendingBuffer = new byte[0];
         private ArraySegment<byte> _pendingBytes = new ArraySegment<byte>(new byte[0], 0, 0);
 
         public WebSocketOStream(WebSocket websocket, WebSocketMessageType messageType)
@@ -110,7 +111,12 @@ namespace MartinCl2.IO
                 bool endOfMessage = count == 0;
                 await _websocket.SendAsync(_pendingBytes, _messageType, endOfMessage, cancellationToken);
             }
-            _pendingBytes = new ArraySegment<byte>(buffer, offset, count);
+            if (_pendingBuffer.Length < buffer.Length)
+            {
+                _pendingBuffer = new byte[buffer.Length];
+            }
+            buffer.CopyTo(_pendingBuffer, offset);
+            _pendingBytes = new ArraySegment<byte>(_pendingBuffer, 0, count);
         }
     }
 }

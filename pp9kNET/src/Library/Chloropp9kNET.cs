@@ -91,14 +91,14 @@ namespace pp9kNET
         /// <summary>
         /// Start a new game
         /// </summary>
-        /// <param name="player_1">Type for white player</param>
-        /// <param name="player_2">Type for black player</param>
+        /// <param name="player1">Type for white player</param>
+        /// <param name="player2">Type for black player</param>
         /// <returns></returns>
-        public bool StartGame(Player player_1, Player player_2)
+        public bool StartGame(Player player1, Player player2)
         {
             lock (ConcurrentLock)
             {
-                return start_game(Wrapper, player_1.ToInt(), player_2.ToInt());
+                return start_game(Wrapper, player1.ToInt(), player2.ToInt());
             }
         }
 

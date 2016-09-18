@@ -46,6 +46,31 @@ namespace pp9kNET.Application
         public const int BoardSize = 8;
 
         protected Piece[,] _pieces = new Piece[BoardSize, BoardSize];
+        public JArray BoardJson
+        {
+            get
+            {
+                JArray board = new JArray();
+                for (int i = 0; i < BoardSize; i++)
+                {
+                    JArray column = new JArray();
+                    for (int j = 0; j < BoardSize; j++)
+                    {
+                        Piece piece = _pieces[i, j];
+
+                        JObject pieceJson = new JObject();
+                        pieceJson.Add("type", piece.Type.ToString());
+                        if (piece.Type != Type.Blank)
+                        {
+                            pieceJson.Add("side", piece.Side.ToString());
+                        }
+                        column.Add(pieceJson);
+                    }
+                    board.Add(column);
+                }
+                return board;
+            }
+        }
 
         protected Color _turn;
 
@@ -61,8 +86,9 @@ namespace pp9kNET.Application
                     { "id", _id },
                     { "createTime", _createTime },
                     { "connectedClients", _clients.Count },
-                    { "blackScore", _blackScore },
-                    { "whiteScore", _whiteScore }
+                    //{ "blackScore", _blackScore },
+                    //{ "whiteScore", _whiteScore },
+                    { "protected", CheckPassword("") }
                 };
             }
         }
@@ -136,10 +162,66 @@ namespace pp9kNET.Application
         /// A controller accepting json input
         /// </summary>
         /// <param name="operation"></param>
+        /// <param name="client">The WebSocket client that request this operation. null means this operation is requested by RESTful api instead of WebSocket</param>
         /// <returns></returns>
-        public JObject Operate(JObject operation)
+        public JObject Operate(JObject operation, WebSocketClient client)
         {
-            return null;
+            JToken actionToken;
+            if (!operation.TryGetValue("action", out actionToken))
+            {
+                return new JObject()
+                {
+                    { "error", "Must specify \"action\"." }
+                };
+            }
+            string action = actionToken.ToString();
+
+            switch (action)
+            {
+                case "authorize":
+                    if (client == null)
+                    {
+                        goto default;
+                    }
+
+                    JToken passwordToken;
+                    if (!operation.TryGetValue("password", out passwordToken))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"password\"." }
+                        };
+                    }
+                    string password = passwordToken.ToString();
+                    if (CheckPassword(password))
+                    {
+                        _clients.TryUpdate(client, true, false);
+                        return new JObject()
+                        {
+                            { "message", "Authorized successfully." }
+                        };
+                    }
+                    else
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Failed to authorize." }
+                        };
+                    }
+
+                case "get_board":
+                    return new JObject()
+                    {
+                        { "board", BoardJson }
+                    };
+
+                default:
+                    return new JObject()
+                    {
+                        { "error", "Unexpected action." },
+                        { "action", action }
+                    };
+            }
         }
     }
 }

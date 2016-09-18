@@ -1,5 +1,5 @@
 {
-  "title": "pp9k.NET",
+  "title": "PP9K.NET",
   "version": "1.0.0-*",
   "description": "ASP.NET Core interface of chloropp9k",
   "authors": [ "Martin Chloride" ],
@@ -44,10 +44,6 @@
 
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
-  },
-
-  "commands": {
-    "kestrel": "Program"
   },
 
   "runtimeOptions": {
