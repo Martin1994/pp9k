@@ -198,7 +198,8 @@ namespace pp9kNET.Application
                         _clients.TryUpdate(client, true, false);
                         return new JObject()
                         {
-                            { "message", "Authorized successfully." }
+                            { "message", "Authorized successfully." },
+                            { "authorize", true }
                         };
                     }
                     else

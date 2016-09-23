@@ -6,13 +6,18 @@
 (function () {
     $(document).ready(function () {
         var hall = new Hall();
+        var game = new Game();
 
-        var startAtGame = window.location.hash.length > 0;
+        hall.game = game;
+        game.hall = hall;
+
+        hall.Show();
+
+        var startAtGame = location.hash.length > 1;
 
         if (startAtGame) {
-
-        } else {
-            hall.Show();
+            $("#hall-page #gameid").val(location.hash.substr(1));
+            hall.SelectForm(Hall.FORM_TYPE.JOIN);
         }
     });
 })();

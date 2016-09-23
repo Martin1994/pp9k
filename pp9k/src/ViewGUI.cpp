@@ -40,7 +40,7 @@ ViewGUI::ViewGUI(bool print_board) : ViewCLI()
     char ch;
     for (int i = 0; i < pp9k::BoardSize; i++)
     {
-        ch = (char)((int)'0' + pp9k::BoardSize - i);
+        ch = (char)((int)'0' + 1);
         str = std::string(&ch, 1);
         this->Window->drawBigString(
             60 - GridWidth,
@@ -70,7 +70,7 @@ ViewGUI::~ViewGUI()
 
 void ViewGUI::FillGrid(int x, int y)
 {
-    int color = (x & 1) == (y & 1) ? 0xCCCCCC : 0x333333;
+    int color = (x & 1) == (y & 1) ? 0x333333 : 0xCCCCCC;
     this->Window->fillRectangleRGB(
         50 + x * GridWidth,
         50 + (pp9k::BoardSize - y - 1) * GridWidth,

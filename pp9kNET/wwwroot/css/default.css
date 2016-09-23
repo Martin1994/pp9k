@@ -176,7 +176,7 @@
   filter: drop-shadow(1px 1px 0 #ccc) 
           drop-shadow(-1px -1px 0 #ccc)
           drop-shadow(1px -1px 0 #ccc) 
-          drop-shadow(1px -1px 0 #ccc);
+          drop-shadow(-1px 1px 0 #ccc);
 }
 
 #game-page .turn-text

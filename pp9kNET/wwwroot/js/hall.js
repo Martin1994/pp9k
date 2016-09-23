@@ -13,9 +13,13 @@
      */
     var Hall = function () {
         this._activeForm = FORM_TYPE.NONE;
+        /** @type {Game} */
+        this.game = null;
 
         this.ApplyBinding();
     };
+
+    Hall.FORM_TYPE = FORM_TYPE;
 
     Hall.prototype.ApplyBinding = function () {
         var that = this;
@@ -38,7 +42,7 @@
                 password: password,
                 white: $("#hall-page #player-type-white").val()
             }, function (data) {
-                window.game.JoinGame(data.id, data.name, password, role);
+                that.game.JoinGame(data.id, data.name, password, role);
             }).fail(function (xhr, status, error) {
                 that.alert(JSON.parse(xhr.responseText).message);
             });
@@ -49,7 +53,7 @@
             var password = $("#hall-page #join-game-password").val();
             var role = $("#hall-page #join-as").val();
             $.get("game/" + gameid, {}, function (data) {
-                window.game.JoinGame(data.id, data.name, password, role);
+                that.game.JoinGame(data.id, data.name, password, role);
             }).fail(function (xhr, status, error) {
                 that.alert(JSON.parse(xhr.responseText).message);
             });
