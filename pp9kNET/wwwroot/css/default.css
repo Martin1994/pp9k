@@ -43,6 +43,27 @@
     left: 20px;
 }
 
+button.disabled,
+button[disabled]
+{
+    background: #777;
+}
+
+button
+{
+    font-size: 18px;
+    color: #ccc;
+    background: #333;
+    border-style: none;
+ 
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    
+    margin: 30px;
+    padding: 5px 10px;
+}
+
 .page
 {
     display: none;
@@ -57,26 +78,6 @@
 #hall-page .welcome
 {
     margin: 75px auto 0;
-}
-
-#hall-page button.disabled
-{
-    background: #777;
-}
-
-#hall-page button
-{
-    font-size: 18px;
-    color: #ccc;
-    background: #333;
-    border-style: none;
- 
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    
-    margin: 30px;
-    padding: 5px 10px;
 }
 
 #hall-page .game-options
@@ -104,6 +105,7 @@
     font-size: 24px;
     margin: 40px 0 0;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 #game-page .board
@@ -179,11 +181,89 @@
           drop-shadow(-1px 1px 0 #ccc);
 }
 
-#game-page .turn-text
+#game-page .turn.white
 {
-    font-size: 18px;
+    background-color: #fff;
+}
+
+#game-page .turn.black
+{
+    background-color: #000;
+}
+
+#game-page .left-bar,
+#game-page .right-bar
+{
+    position: absolute;
+    height: 100%;
+    width: 20px;
+    top: 0;
+    border-color: #555;
+    border-width: 5px;
+}
+
+#game-page .left-bar
+{
+    left: 0px;
+    border-right-style: none;
+}
+
+#game-page .right-bar
+{
+    right: 0;
+    border-left-style: none;
+}
+
+#game-page .message-area,
+#game-page .button-area
+{
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+}
+
+#game-page .message-area
+{
+    left: 30px;
+    width: 200px;
+    font-size: 12px;
+    text-align: left;
+}
+
+#game-page .message-area .error
+{
+    color: #c33;
+}
+
+#game-page .message-area .message
+{
+    color: #33c;
+}
+
+#game-page .message-area .chat
+{
+    color: #333;
+}
+
+#game-page .message-area .time
+{
+    color: #333;
     font-weight: bold;
-    line-height: 50px;
+}
+
+#game-page .button-area
+{
+    display: none;
+    right: 30px;
+    height: auto;
+    width: auto;
+    text-align: right;
+}
+
+#game-page .button-area button
+{
+    margin: 5px;
+    width: 100px;
 }
 
 #game-page iframe.comet

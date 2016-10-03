@@ -35,6 +35,9 @@ namespace pp9k
 
         typedef void(*ChangeTurnFunc)(int side);
         ChangeTurnFunc ChangeTurnHandler;
+
+        typedef void(*RequestMoveFunc)(int side);
+        RequestMoveFunc RequestMoveHandler;
         
         ViewWrapper();
         ~ViewWrapper();

@@ -53,20 +53,17 @@ namespace pp9kNET.Application
                 JArray board = new JArray();
                 for (int i = 0; i < BoardSize; i++)
                 {
-                    JArray column = new JArray();
                     for (int j = 0; j < BoardSize; j++)
                     {
                         Piece piece = _pieces[i, j];
-
-                        JObject pieceJson = new JObject();
-                        pieceJson.Add("type", piece.Type.ToString());
-                        if (piece.Type != Type.Blank)
-                        {
-                            pieceJson.Add("side", piece.Side.ToString());
-                        }
-                        column.Add(pieceJson);
+                        JObject pieceJson = new JObject() {
+                            { "type", piece.Type.ToString() },
+                            { "side", piece.Side.ToString() },
+                            { "x", i },
+                            { "y", j }
+                        };
+                        board.Add(pieceJson);
                     }
-                    board.Add(column);
                 }
                 return board;
             }
@@ -110,19 +107,55 @@ namespace pp9kNET.Application
             BoardChanged += OnBoardChanged;
             TurnChanged += OnTurnChanged;
             ScoreShown += OnScoreShown;
+            Won += OnWon;
+            Drawn += OnDrawn;
         }
 
-        protected void OnBoardChanged(int x, int y, Type type, Color side)
+        private async void OnDrawn()
+        { 
+            await Boardcast(new JObject()
+            {
+                { "message", "Draw!" }
+            });
+        }
+
+        private async void OnWon(Color side, bool checkmate)
+        {
+            await Boardcast(new JObject()
+            {
+                { "message", side.ToString() + " win!" }
+            });
+        }
+
+        private async void OnBoardChanged(int x, int y, Type type, Color side)
         {
             _pieces[x, y] = new Piece(type, side);
+            await Boardcast(new JObject()
+            {
+                { "update_board", new JArray()
+                    {
+                        new JObject()
+                        {
+                            { "type", type.ToString() },
+                            { "side", side.ToString() },
+                            { "x", x },
+                            { "y", y }
+                        }
+                    }
+                }
+            });
         }
 
-        protected void OnTurnChanged(Color side)
+        private async void OnTurnChanged(Color side)
         {
             _turn = side;
+            await Boardcast(new JObject()
+            {
+                { "update_turn", Turn.ToString() }
+            });
         }
 
-        protected void OnScoreShown(double score1, double score2)
+        private void OnScoreShown(double score1, double score2)
         {
             _blackScore = score2;
             _whiteScore = score1;
@@ -143,6 +176,14 @@ namespace pp9kNET.Application
                 _clients.TryRemove(client, out success);
                 return Task.FromResult(0);
             };
+        }
+
+        public async Task Boardcast(JObject message)
+        {
+            foreach (WebSocketClient client in Clients)
+            {
+                await client.Send(message.ToString(Newtonsoft.Json.Formatting.None));
+            }
         }
 
         /// <summary>
@@ -210,17 +251,75 @@ namespace pp9kNET.Application
                         };
                     }
 
-                case "get_board":
+                case "init":
                     return new JObject()
                     {
-                        { "board", BoardJson }
+                        { "update_board", BoardJson },
+                        { "update_turn", Turn.ToString() }
                     };
+
+                case "move":
+                    JToken from;
+                    if (!operation.TryGetValue("from", out from) && from.Type == JTokenType.Object)
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"from\"." }
+                        };
+                    }
+                    JToken to;
+                    if (!operation.TryGetValue("to", out to) && to.Type == JTokenType.Object)
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"to\"." }
+                        };
+                    }
+                    JToken fromX;
+                    if (!((JObject)from).TryGetValue("x", out fromX))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"from.x\"." }
+                        };
+                    }
+                    JToken fromY;
+                    if (!((JObject)from).TryGetValue("y", out fromY))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"from.y\"." }
+                        };
+                    }
+                    JToken toX;
+                    if (!((JObject)to).TryGetValue("x", out toX))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"to.x\"." }
+                        };
+                    }
+                    JToken toY;
+                    if (!((JObject)to).TryGetValue("y", out toY))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Must specify \"to.y\"." }
+                        };
+                    }
+                    if(!MakeMove((int)fromX, (int)fromY, (int)toX, (int)toY))
+                    {
+                        return new JObject()
+                        {
+                            { "error", "Failed to move" }
+                        };
+                    }
+                    return new JObject();
 
                 default:
                     return new JObject()
                     {
-                        { "error", "Unexpected action." },
-                        { "action", action }
+                        { "error", "Unexpected action." }
                     };
             }
         }

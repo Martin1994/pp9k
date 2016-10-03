@@ -75,6 +75,11 @@ extern "C"
     {
         return ((pp9k_wrapper*) wrapper)->controller->MakeMove(original_x, original_y, target_x, target_y, static_cast<pp9k::ChessType>(prefer));
     }
+
+    EXPORT bool ai_move(void* wrapper)
+    {
+        return ((pp9k_wrapper*)wrapper)->controller->AIMove();
+    }
     
     EXPORT bool undo(void* wrapper)
     {
@@ -200,6 +205,11 @@ extern "C"
     EXPORT void set_change_turn_handler(void* wrapper, pp9k::ViewWrapper::ChangeTurnFunc handler)
     {
         ((pp9k_wrapper*)wrapper)->view->ChangeTurnHandler = handler;
+    }
+
+    EXPORT void set_request_move_handler(void* wrapper, pp9k::ViewWrapper::RequestMoveFunc handler)
+    {
+        ((pp9k_wrapper*)wrapper)->view->RequestMoveHandler = handler;
     }
     
     

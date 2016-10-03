@@ -54,7 +54,7 @@
 
   "publishOptions": {
     "include": [
-      "lib"
+      "wwwroot"
     ]
   },
 

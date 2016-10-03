@@ -174,8 +174,6 @@
     <ClInclude Include="src\View.h" />
     <ClInclude Include="src\ViewWrapper.h" />
     <ClInclude Include="src\window.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Board.cpp" />

@@ -18,6 +18,7 @@ ViewWrapper::ViewWrapper()
     this->WinHandler = NULL;
     this->ShowScoreHandler = NULL;
     this->ChangeTurnHandler = NULL;
+    this->RequestMoveHandler = NULL;
 }
 
 ViewWrapper::~ViewWrapper()
@@ -68,5 +69,6 @@ void ViewWrapper::ChangeTurn(Color side)
 
 void ViewWrapper::RequestMove(Color side)
 {
-
+    if (this->RequestMoveHandler != NULL)
+        RequestMoveHandler(static_cast<int>(side));
 }

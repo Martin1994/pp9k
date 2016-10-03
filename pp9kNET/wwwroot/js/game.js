@@ -7,16 +7,118 @@
         ERROR: 1
     };
 
+    var BOARD_WIDTH = 8;
+
+    var Piece = function (type, side) {
+        this.type = type;
+        this.side = side;
+    };
+
+    Piece.prototype._imageMap = {
+        King: "k",
+        Queen: "q",
+        Rook: "r",
+        Knight: "n",
+        Bishop: "b",
+        Pawn: "p"
+    };
+
+    Piece.prototype.GetImage = function () {
+        var typeStr = this._imageMap[this.type];
+        if (!typeStr) {
+            return "";
+        }
+        return "img/Chess_" + typeStr + (this.side === "White" ? "l" : "d") + "t45.svg";
+    };
+
+    var GameBoard = function () {
+        this.board = [];
+        for (var i = 0; i < BOARD_WIDTH; i++) {
+            var column = [];
+            for (var j = 0; j < BOARD_WIDTH; j++) {
+                column.push(null);
+            }
+            this.board.push(column);
+        }
+    };
+
+    GameBoard.prototype.GetPiece = function (x, y) {
+        return this.board[x][y];
+    };
+
+    GameBoard.prototype.SetPiece = function (x, y, piece) {
+        this.board[x][y] = piece;
+        $(".board .grid[x=" + x + "][y=" + y + "]").html(piece.type == "Blank" ? "" : "<img src=\"" + piece.GetImage() + "\" />");
+    };
+
+    GameBoard.prototype.Clear = function () {
+        $(".board .grid").html();
+        for (var i = 0; i < BOARD_WIDTH; i++) {
+            for (var j = 0; j < BOARD_WIDTH; j++) {
+                this.board[i][j] = null;
+            }
+        }
+    };
+
     /**
      * Controls behaviour of game board
      */
     var Game = function () {
-        /** @type {WebSocket} */
-        this._ws = null;
         /** @type {Hall} */
         this.hall = null;
         this._role = "";
+        this._authorized = false;
+        this.selectedPiece = null;
+        /** @type {WebSocket} */
+        this._ws = null;
         this._wsPendingMessages = [];
+        this._board = new GameBoard();
+        this._turn = "white";
+
+        this.ApplyBinding();
+    };
+
+    Game.prototype.ApplyBinding = function () {
+        var that = this;
+
+        $("#game-page .board .grid").click(function (e) {
+            if (!that._authorized || that._turn.toLowerCase() !== that._role) {
+                return;
+            }
+
+            var isEmpty = !$(this).html();
+            var thisPiece = {
+                x: $(this).attr("x"),
+                y: $(this).attr("y")
+            };
+
+            if (that._selectedPiece) {
+                // Move a piece to an empty cell
+                that.Request({
+                    action: "move",
+                    from: {
+                        x: that._selectedPiece.x,
+                        y: that._selectedPiece.y
+                    },
+                    to: {
+                        x: thisPiece.x,
+                        y: thisPiece.y
+                    }
+                });
+                // Deselect
+                that._selectedPiece = null;
+                $("#game-page .board .grid").removeClass("blink");
+            } else if (!isEmpty) {
+                // Change the select piece
+                $("#game-page .board .grid").removeClass("blink");
+                if (that._board.GetPiece(thisPiece.x, thisPiece.y).side.toLowerCase() === that._role) {
+                    that._selectedPiece = thisPiece;
+                    $("#game-page .board .grid[x=" + thisPiece.x + "][y=" + thisPiece.y + "]").addClass("blink");
+                } else {
+                    that._selectedPiece = null;
+                }
+            }
+        });
     };
 
     Game.prototype.JoinGame = function (id, name, password, role) {
@@ -47,6 +149,7 @@
         };
 
         this._role = role;
+        this._authorized = false;
         if (role !== "observer") {
             this.Request({
                 action: "authorize",
@@ -54,7 +157,7 @@
             });
         }
         this.Request({
-            action: "get_board"
+            action: "init"
         });
     };
 
@@ -88,12 +191,17 @@
                     this.ShowError(commandContent);
                     break;
 
-                case "board":
-                    this.SetBoard(commandContent, false);
+                case "update_board":
+                    this.SetBoard(commandContent);
                     break;
 
-                case "update_board":
-                    this.SetBoard(commandContent, true);
+                case "update_turn":
+                    this.SetTurn(commandContent);
+                    break;
+
+                case "authorize":
+                    this._authorized = true;
+                    $("#game-page .button-area").fadeIn();
                     break;
 
                 default:
@@ -106,18 +214,32 @@
     /**
      * Set the game board
      * @param {Array} board - board information
-     * @param {boolean} refresh - if true, the board will be cleard before set the incomming board data; if false, only the position contained in the incomming board data will be updated
      */
     Game.prototype.SetBoard = function (board, refresh) {
-        if (refresh) {
-            $(".board .grid").html();
-        }
         for (var i = 0; i < board.length; i++) {
-            for (var j = 0; j < board[0].length; j++) {
-                var change = board[i][j];
-                $(".board .grid[x=" + i + "][y=" + j + "]").html(change.type == "Blank" ? "" : "<img src=\"" + this.GetPieceImage(change.type, change.side) + "\" />");
-            }
+            var change = board[i];
+            var piece = new Piece(change.type, change.side);
+            this._board.SetPiece(change.x, change.y, piece);
         }
+    };
+
+    Game.prototype.SetTurn = function (turn) {
+        // Update resign button
+        if (turn.toLowerCase() === this._role) {
+            $("#game-page #resign-button").removeAttr("disabled");
+        } else {
+            $("#game-page #resign-button").attr("disabled", "");
+        }
+
+        // Set turn colour
+        $("#game-page .turn").removeClass(this._turn.toLowerCase());
+        $("#game-page .turn").addClass(turn.toLowerCase());
+
+        this._turn = turn;
+
+        // Deselect
+        this._selectedPiece = null;
+        $("#game-page .board .grid").removeClass("blink");
     };
 
     Game.prototype.ShowMessage = function (message) {
@@ -129,11 +251,8 @@
     };
 
     Game.prototype.PushMessage = function (message, type) {
-        alert((type === MESSAGE_TYPE.MESSAGE ? "Message: " : "Error: ") + message);
-    };
-
-    Game.prototype.GetPieceImage = function (type, side) {
-        return "img/Chess_" + type.substr(0, 1).toLowerCase() + (side === "White" ? "l" : "d") + "t45.svg";
+        var typeClass = type === MESSAGE_TYPE.MESSAGE ? "message" : "error";
+        $("#game-page .message-area").append("<div class=\"message\"><span class=\"" + typeClass + "\">" + message + "</span></div>");
     };
 
     /**
