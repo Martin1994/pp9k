@@ -7,15 +7,19 @@
 //
 
 #if defined(_MSC_VER)
+    #define NO_GUI
+#endif
+
+#if defined(_MSC_VER)
     #if defined(_DEBUG)
         #include <stdlib.h>
         #include <crtdbg.h>
-        
+
         #ifndef DBG_NEW
             #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
             #define new DBG_NEW
         #endif
-        
+
     #endif
 #endif
 
@@ -26,8 +30,8 @@
 #include "Controller.h"
 
 #include "ViewCLI.h"
-#if !defined(_MSC_VER)
-#include "ViewGUI.h"
+#if !defined(NO_GUI)
+    #include "ViewGUI.h"
 #endif
 
 int main(int argc, const char * argv[])
@@ -58,12 +62,12 @@ int main(int argc, const char * argv[])
 
     pp9k::Game* game = new pp9k::Game();
     pp9k::Controller* controller = new pp9k::Controller();
-    #if defined(_MSC_VER)
+    #if defined(NO_GUI)
     pp9k::View* view = new pp9k::ViewCLI();
     #else
     pp9k::View* view = graphics ? new pp9k::ViewGUI(board_print) : new pp9k::ViewCLI();
     #endif
-    
+
     game->SetView(view);
     view->SetController(controller);
     controller->SetGame(game);
@@ -73,17 +77,15 @@ int main(int argc, const char * argv[])
         controller->LoadBoard(is);
         delete is;
     }
-    
+
     view->GetCommand();
 
     delete game;
     delete view;
     delete controller;
 
-    #if defined(_MSC_VER)
-        #if defined(_DEBUG)
-            _CrtDumpMemoryLeaks();
-        #endif
+    #if defined(_MSC_VER) && defined(_DEBUG)
+        _CrtDumpMemoryLeaks();
     #endif
 
     return 0;
